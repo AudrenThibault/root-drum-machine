@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Wed Jul 13 18:20:23 2022
+# Make data base, printed on Wed Aug  3 06:51:00 2022
 
 # Variables
 
@@ -21,7 +21,7 @@ PREFIX := arm-none-eabi-
 # automatic
 ?F = $(notdir $?)
 # makefile (from '/opt/devkitpro/devkitARM/base_tools', line 5)
-UNAME_R := 5.13.0-52-generic
+UNAME_R := 5.15.0-43-generic
 # environment
 DESKTOP_SESSION = ubuntu
 # default
@@ -57,13 +57,13 @@ SHELL = /bin/sh
 # makefile (from '/opt/devkitpro/devkitARM/base_tools', line 27)
 NM := arm-none-eabi-gcc-nm
 # environment
-SNAP_DATA = /var/snap/code/101
+SNAP_DATA = /var/snap/code/102
 # makefile (from '/opt/devkitpro/devkitARM/ds_rules', line 20)
 GAME_SUBTITLE2 := http://devkitpro.org
 # environment
 VSCODE_NLS_CONFIG = {"locale":"fr","availableLanguages":{},"_languagePackSupport":true}
 # environment
-JOURNAL_STREAM = 8:62257
+JOURNAL_STREAM = 8:60049
 # makefile (from 'Makefile', line 40)
 CFLAGS := -g -Wall -O2 -march=armv5te -mtune=arm946e-s -fomit-frame-pointer -ffast-math -mthumb -mthumb-interwork  -DARM9
 # environment
@@ -93,17 +93,17 @@ XDG_DATA_DIRS = /usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/d
 # makefile (from 'Makefile', line 110)
 LIBPATHS := -L/opt/devkitpro/libnds/lib
 # environment
-DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/1000/bus,guid=e61eda8ab0e88bac15b65aac62ce652b
+DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/1000/bus,guid=3bd397744b8b82931e126fc462e9fe95
 # makefile (from '/opt/devkitpro/devkitARM/base_tools', line 23)
 AS := arm-none-eabi-as
 # makefile (from 'Makefile', line 75)
 CFILES := MaxModExample.c
 # environment
-_ = /snap/code/101/usr/share/code/code
+_ = /snap/code/102/usr/share/code/code
 # environment
 INFOPATH = /home/linuxbrew/.linuxbrew/share/info:
 # environment
-MANAGERPID = 2791
+MANAGERPID = 2813
 # makefile (from 'Makefile', line 27)
 MUSIC := maxmod_data
 # environment
@@ -111,7 +111,7 @@ LESSOPEN = | /usr/bin/lesspipe %s
 # environment
 VSCODE_CWD = /home/thibault
 # environment
-GSETTINGS_SCHEMA_DIR = /snap/code/101/usr/share/glib-2.0/schemas
+GSETTINGS_SCHEMA_DIR = /snap/code/102/usr/share/glib-2.0/schemas
 # default
 MAKE_HOST := x86_64-pc-linux-gnu
 # makefile (from '/opt/devkitpro/devkitARM/base_tools', line 14)
@@ -123,7 +123,7 @@ HFILES :=  soundbank_bin.h
 # environment
 GPG_AGENT_INFO = /run/user/1000/gnupg/S.gpg-agent:0:1
 # environment
-SESSION_MANAGER = local/comput2:@/tmp/.ICE-unix/3023,unix/comput2:/tmp/.ICE-unix/3023
+SESSION_MANAGER = local/comput2:@/tmp/.ICE-unix/3046,unix/comput2:/tmp/.ICE-unix/3046
 # environment
 XDG_RUNTIME_DIR = /run/user/1000
 # environment
@@ -131,7 +131,7 @@ GDK_PIXBUF_MODULE_FILE = /home/thibault/snap/code/common/.cache/gdk-pixbuf-loade
 # makefile (from 'Makefile', line 80)
 AUDIOFILES := /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/maxmod_data/R8.TomDry1.wav /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/maxmod_data/R8.CongaMute.wav /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/maxmod_data/PO15.WAV /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/maxmod_data/R8.SDPicolo.wav /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/maxmod_data/arsdfmgame.wav /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/maxmod_data/kit22.wav /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/maxmod_data/jap2.wav /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/maxmod_data/lsdj2.wav /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/maxmod_data/PO22.WAV /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/maxmod_data/dr55hat.wav /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/maxmod_data/fpops26.wav /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/maxmod_data/kit25.wav /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/maxmod_data/PO25.WAV /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/maxmod_data/kit23.wav /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/maxmod_data/TR727.PadDrum.wav /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/maxmod_data/jap4.wav /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/maxmod_data/Live.HH1C.wav /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/maxmod_data/ObermeimDMX.Toms1.wav /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/maxmod_data/TR808.Claves.wav /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/maxmod_data/jap1.wav /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/maxmod_data/ObermeimDMX.Toms2.wav /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/maxmod_data/clap2.wav /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/maxmod_data/pops-sd-5.wav /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/maxmod_data/gbsync.wav /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/maxmod_data/lsdj7.wav /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/maxmod_data/ind1.wav /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/maxmod_data/PO20.WAV /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/maxmod_data/ClassicSnare2.wav /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/maxmod_data/TR727.CongaL.wav /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/maxmod_data/TR727.AgogoL.wav /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/maxmod_data/pops-sd-9.wav /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/maxmod_data/TR727.MetalL.wav /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/maxmod_data/R8.CongaLow.wav /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/maxmod_data/TrianglC.wav /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/maxmod_data/kit24.wav /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/maxmod_data/R8.CongaSlap.wav /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/maxmod_data/PO16.WAV /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/maxmod_data/pops-rim1.wav /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/maxmod_data/PO24.WAV /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/maxmod_data/kit27.wav /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/maxmod_data/R8.AgogoOct.wav /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/maxmod_data/pops-clave1.wav /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/maxmod_data/ObermeimDMX.Toms4.wav /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/maxmod_data/TR808.SD3.wav /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/maxmod_data/arbdclyap.wav /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/maxmod_data/Live.dryBD.wav /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/maxmod_data/TR727.MetalH.wav /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/maxmod_data/dr55rim.wav /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/maxmod_data/sync.wav /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/maxmod_data/R8.Agogo.wav /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/maxmod_data/kit28.wav /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/maxmod_data/PO23.WAV /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/maxmod_data/TR727.CongaH.wav /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/maxmod_data/Coucou.wav /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/maxmod_data/jap6.wav /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/maxmod_data/PO21.WAV /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/maxmod_data/lsdj1.wav /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/maxmod_data/TR727.AgogoH.wav /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/maxmod_data/ObermeimDMX.HHC.wav /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/maxmod_data/PO17.WAV /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/maxmod_data/kit26.wav /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/maxmod_data/pops-sd14.wav /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/maxmod_data/ObermeimDMX.Claps.wav /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/maxmod_data/PO26.WAV /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/maxmod_data/ObermeimDMX.SD3.wav /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/maxmod_data/Linn9000.CongaH.wav /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/maxmod_data/Linn9000.CongaL.wav /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/maxmod_data/PunchSD.wav /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/maxmod_data/ClassicKick.wav /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/maxmod_data/PO12.WAV /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/maxmod_data/PO14.WAV /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/maxmod_data/R8.RimShot2.wav /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/maxmod_data/dr55snare2.wav /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/maxmod_data/R8.Clave.wav /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/maxmod_data/syncwolf.wav /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/maxmod_data/PO13.WAV /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/maxmod_data/ObermeimDMX.Shaker3.wav /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/maxmod_data/kit21.wav /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/maxmod_data/aa.wav /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/maxmod_data/ChipShopPOBassSol.wav /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/maxmod_data/PO18.WAV /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/maxmod_data/pops-sd-3.wav /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/maxmod_data/README.md /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/maxmod_data/dr55snare.wav /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/maxmod_data/jap3.wav /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/maxmod_data/arsdfmwoody.wav /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/maxmod_data/lsdj3.wav
 # environment
-SNAP = /snap/code/101
+SNAP = /snap/code/102
 # makefile (from 'Makefile', line 98)
 OFILES_BIN := soundbank.bin.o
 # default
@@ -141,7 +141,7 @@ LIBDIRS := /opt/devkitpro/libnds
 # makefile (from 'Makefile', line 69)
 VPATH := /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/source  
 # environment
-SNAP_VERSION = b06ae3b2
+SNAP_VERSION = 3b889b09
 # makefile (from '/opt/devkitpro/devkitARM/base_tools', line 24)
 AR := arm-none-eabi-gcc-ar
 # environment
@@ -151,11 +151,11 @@ DISABLE_WAYLAND = 1
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # environment
-INVOCATION_ID = 16ee1211d3654f80ac7beb37017dbe75
+INVOCATION_ID = c634caa7993c4ab58185ea8875ede8ee
 # makefile (from 'Makefile', line 44)
 LDFLAGS = -specs=ds_arm9.specs -g $(ARCH) -Wl,-Map,$(notdir $*.map)
 # environment
-GDK_PIXBUF_MODULEDIR = /snap/code/101/usr/lib/x86_64-linux-gnu/gdk-pixbuf-2.0/2.10.0/loaders
+GDK_PIXBUF_MODULEDIR = /snap/code/102/usr/lib/x86_64-linux-gnu/gdk-pixbuf-2.0/2.10.0/loaders
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
 # environment
@@ -165,7 +165,7 @@ XDG_SESSION_DESKTOP = ubuntu
 # environment
 SSH_AUTH_SOCK = /run/user/1000/keyring/ssh
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 43958
+GIO_LAUNCHED_DESKTOP_FILE_PID = 5728
 # automatic
 %F = $(notdir $%)
 # makefile (from '/opt/devkitpro/devkitARM/base_tools', line 4)
@@ -183,7 +183,7 @@ PWD = /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/
 # default
 .LOADED := 
 # environment
-SSH_AGENT_PID = 2984
+SSH_AGENT_PID = 3007
 # environment
 ORIGINAL_XDG_CURRENT_DESKTOP = ubuntu:GNOME
 # environment
@@ -203,11 +203,11 @@ VSCODE_CLI = 1
 # makefile (from '/opt/devkitpro/devkitARM/base_tools', line 30)
 ISVC = $(or $(VCBUILDHELPER_COMMAND),$(MSBUILDEXTENSIONSPATH32),$(MSBUILDEXTENSIONSPATH))
 # environment
-VSCODE_CODE_CACHE_PATH = /home/thibault/.config/Code/CachedData/b06ae3b2d2dbfe28bca3134cc6be65935cdfea6a
+VSCODE_CODE_CACHE_PATH = /home/thibault/.config/Code/CachedData/3b889b090b5ad5793f524b5d1d39fda662b96a2a
 # environment
 LOGNAME = thibault
 # environment
-APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
 # makefile (from '/opt/devkitpro/devkitARM/ds_rules', line 9)
 LIBNDS := /opt/devkitpro/libnds
 # environment
@@ -245,7 +245,7 @@ QT_IM_MODULE = ibus
 # environment
 DEVKITARM = /opt/devkitpro/devkitARM
 # environment
-SNAP_USER_DATA = /home/thibault/snap/code/101
+SNAP_USER_DATA = /home/thibault/snap/code/102
 # environment
 SHLVL = 0
 # makefile (from '/opt/devkitpro/devkitARM/base_tools', line 21)
@@ -259,7 +259,7 @@ MAKE_VERSION := 4.2.1
 # environment
 USER = thibault
 # environment
-SNAP_REVISION = 101
+SNAP_REVISION = 102
 # makefile (from '/opt/devkitpro/devkitARM/ds_rules', line 12)
 GAME_TITLE := 
 # makefile
@@ -280,10 +280,11 @@ MAKE_COMMAND := make
 .VARIABLES := 
 # makefile (from '/opt/devkitpro/devkitARM/ds_rules', line 24)
 GAME_ICON := /opt/devkitpro/libnds/icon.bmp
+ 
 # automatic
 *F = $(notdir $*)
 # environment
-VSCODE_IPC_HOOK = /run/user/1000/vscode-b29da0f6-1.69.1-main.sock
+VSCODE_IPC_HOOK = /run/user/1000/vscode-b29da0f6-1.69.2-main.sock
 # environment
 BAMF_DESKTOP_FILE_HINT = /var/lib/snapd/desktop/applications/code_code.desktop
 # makefile (from 'Makefile', line 33)
@@ -295,7 +296,6 @@ MFLAGS = -pqrR
 # automatic
 *D = $(patsubst %/,%,$(dir $*))
 # makefile (from '/opt/devkitpro/devkitARM/base_rules', line 6)
- 
 PORTLIBS_PATH := /opt/devkitpro/portlibs
 # environment
 HOMEBREW_SHELLENV_PREFIX = /home/linuxbrew/.linuxbrew
@@ -362,9 +362,9 @@ GAME_SUBTITLE1 := built with devkitARM
 # environment
 LANG = C
 # environment
-VSCODE_PID = 44007
+VSCODE_PID = 5784
 # environment
-DBUS_STARTER_ADDRESS = unix:path=/run/user/1000/bus,guid=e61eda8ab0e88bac15b65aac62ce652b
+DBUS_STARTER_ADDRESS = unix:path=/run/user/1000/bus,guid=3bd397744b8b82931e126fc462e9fe95
 # variable set hash-table stats:
 # Load=176/1024=17%, Rehash=0, Collisions=52/474=11%
 
@@ -375,11 +375,11 @@ DBUS_STARTER_ADDRESS = unix:path=/run/user/1000/bus,guid=e61eda8ab0e88bac15b65aa
 # Directories
 
 # source (device 66311, inode 35786093): 3 files, no impossibilities.
-# . (device 66311, inode 16663764): 12 files, no impossibilities.
+# . (device 66311, inode 16663764): 13 files, no impossibilities.
 # maxmod_data (device 66311, inode 35786008): 89 files, no impossibilities.
 # /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/source (device 66311, inode 35786093): 3 files, no impossibilities.
 
-# 107 files, no impossibilities in 4 directories.
+# 108 files, no impossibilities in 4 directories.
 
 # Implicit Rules
 
@@ -568,6 +568,7 @@ clean:
 # Not a target:
 /opt/devkitpro/devkitARM/base_tools:
 #  Implicit rule search has been done.
+ 
 #  Last modified 2020-07-28 04:27:14
 #  File has been updated.
 #  Successfully updated.
@@ -581,12 +582,12 @@ clean:
 # General ('VPATH' variable) search path:
 # /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum/source
 
-# strcache buffers: 1 (0) / strings = 138 / storage = 1752 B / avg = 12 B
-# current buf: size = 8162 B / used = 1752 B / count = 138 / avg = 12 B
+# strcache buffers: 1 (0) / strings = 139 / storage = 1747 B / avg = 12 B
+# current buf: size = 8162 B / used = 1747 B / count = 139 / avg = 12 B
 
-# strcache performance: lookups = 178 / hit rate = 22%
+# strcache performance: lookups = 179 / hit rate = 22%
 # hash-table stats:
-# Load=138/8192=2%, Rehash=0, Collisions=4/178=2%
-# Finished Make data base on Wed Jul 13 18:20:23 2022
+# Load=139/8192=2%, Rehash=0, Collisions=4/179=2%
+# Finished Make data base on Wed Aug  3 06:51:00 2022
 
  

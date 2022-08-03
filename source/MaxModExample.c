@@ -9,6 +9,7 @@
 #include <unistd.h>
 #include <time.h>
 #include <dirent.h>
+#include <nds/ndstypes.h>
 
 #include "soundbank.h"
 #include "soundbank_bin.h"
@@ -122,6 +123,7 @@ int serial_ticks = 0;
 
 char *status_text[] = { "            ", "PATTERN PLAY", "SONG PLAY   ", "SYNC WAIT   ", 
 		"SYNC PATTERN", "SYNC SONG   ", "SAVED OK    ", "LOADED OK   ", "CLEARED     "};
+// j'ai commenté la fonction draw_status
 
 unsigned int status = 0;
 
@@ -140,6 +142,9 @@ int millis_between_ticks;
 
 int ticks;
 int tocks;
+
+//nombre de colonnes
+int less_columns = 16;
 
 #define REG_TM2D *(vu16*)0x4000108 		//4000108h - TM2CNT_L - Timer 2 Counter/Reload (R/W)
 #define REG_TM2C *(vu16*)0x400010A 		//400010Ah - TM2CNT_H - Timer 2 Control (R/W)
@@ -172,6 +177,9 @@ typedef struct {
 	u8 pan; 		//128= normal, 0=left, 255=right
 	u8 random;
 	u8 activeNote;
+	u8 playOrNot;
+	u8 playOrNotCount;
+	u8 optionsUp;
 } pattern_row; 
 
 typedef struct {
@@ -254,12 +262,36 @@ int bpmFolies[] = { 10, -20, 30, -10, 20, -30, 0 };
 char typeOfSyncs = 0;
 int valueBpmFolies = 0;
 int randBpmFolies = 0;
-int bpmFoliesActivated = true;
+int bpmFoliesActivated = false;
 int syncDSMode = false;
 int bottomPrinted = false;
 int touchedBtn = false;
-int IARandom = true;
+int IARandom = false;
 int IABpm = true;
+int sound = 0;
+int gbSoundStatus = 0;
+int gbSoundDecay = 5;
+int streamOpen = false;
+int streamChange = 0;
+int globalPitch = 0;
+int superLiveMod = false;
+int unSurCombien = 0;
+int IAAutoCymbal = false;
+int changedPatternOne = 0;
+int soundsInCurrentPattern = 0;
+int soundsInPattern[50];
+int autoLoopPattern = false;
+int blanc = "\x1b[37m\x1b[0m";
+int gris = "\x1b[30m\x1b[0m";
+int rouge = "\x1b[31m\x1b[0m";
+int vert = "\x1b[32m\x1b[0m";
+int jaune = "\x1b[33m\x1b[0m";
+int bleu = "\x1b[34m\x1b[0m";
+int violet = "\x1b[35m\x1b[0m";
+int cyan = "\x1b[36m\x1b[0m";
+// mm_stream mystream;
+// mm_word mmStreamGetPosition();
+int countColons;
 
 PrintConsole topScreen;
 PrintConsole bottomScreen;
@@ -414,7 +446,7 @@ void init_song(){
 	int column;
 	
 	for (pc = 0; pc < MAX_PATTERNS; pc++){	
-		for (column = 0; column < MAX_COLUMNS; column++){
+		for (column = 0; column < less_columns; column++){
 			for (row = 0; row < MAX_ROWS; row++){
 				pattern_row *current_cell = &(current_song->patterns[pc].columns[column].rows[row]);
 				current_cell->volume = 0; 
@@ -453,7 +485,7 @@ void rand_pattern(){
 			randVolTwo = 0;
 		}
 		
-		if (tours % 3 == 0) {
+		if (tours % 3 == 0 && IAAutoCymbal == true) { //ia auto cymbal
 			pattern_row *current_cell;
 			if (current_song->bpm >= 200) {
 				current_cell = &(current_song->patterns[0].columns[0].rows[10]);
@@ -483,10 +515,11 @@ void rand_pattern(){
 				current_cell->pitch = 0;
 			}
 
-		} else if (tours <= IALimit * 2 && IARandom == true) {
+		} else if (tours <= IALimit * 2 && IARandom == true) { //ia random bordélique
+			//ia random bordélique
 			pattern_row *current_cell = &(current_song->patterns[current_pattern_index].columns[column].rows[row]);
 
-			for (column = 0; column < MAX_COLUMNS; column++){
+			for (column = 0; column < less_columns; column++){
 				for (row = 0; row < MAX_ROWS; row++) {	
 					// if (row == 4 || row == 7 || row == 10) {
 						val = (u8)rand(); //ancien
@@ -544,7 +577,7 @@ void clear_pattern(){
 	int column, row;
 	pattern_row *current_cell;
 	
-	for (column = 0; column < MAX_COLUMNS; column++){
+	for (column = 0; column < less_columns; column++){
 		for (row = 0; row < MAX_ROWS; row++){
 			current_cell = &(current_song->patterns[current_pattern_index].columns[column].rows[row]);
 			current_cell->volume = 0; 
@@ -581,39 +614,94 @@ void paste_order(short *to){
 	}
 }
 
-// Play a note and show which one was played
-// void note_play(int note, int octave)
-// {
-	// Clear next top and current rows
-	// SBB_CLEAR_ROW(31, (txt_scrolly/8-2)&31);
-	// SBB_CLEAR_ROW(31, txt_scrolly/8);	
+//son gameboy
+int sine;		// sine position
+int lfo;		// LFO position
+int sine_freq = 0;
+int lfo_freq = 0;
+int lfo_shift = 0;
 
-	// Display note and scroll
-	//tte_printf("#{P:16,%d;cx:0}%-2s%+2d", txt_scrolly, names[note], octave);
-	//se_puts(16, txt_scrolly, str, 0);
+//-----------------------------------------------------------------------------
+// enum {
+//-----------------------------------------------------------------------------
+	// waveform base frequency
+	// sine_freq = s_freq;
+	
+	// // LFO frequency
+	// lfo_freq = l_freq;
+	
+	// // LFO output shift amount
+	// lfo_shift = 0;
+	
+	// // blue backdrop
+	// bg_colour = 13 << 10,
+	
+	// // red cpu usage
+	// cpu_colour = 31
+// };
 
-	//txt_scrolly -= 8;
-	//REG_BG0VOFS= txt_scrolly-8;
 
-	// Play the actual note
-	// REG_SND1FREQ = SFREQ_RESET | SND_RATE(note, octave);
-// }
+mm_word on_stream_request( mm_word length, mm_addr dest, mm_stream_formats format ) {
+//----------------------------------------------------------------------------------
+	
+	// s16 *target = dest;
+	
+	// //------------------------------------------------------------
+	// // synthensize a sine wave with an LFO applied to the pitch
+	// // the stereo data is interleaved
+	// //------------------------------------------------------------
+	// int len = 3000;
+	// // if (gbSoundDecay != 0) {
+	// 	for( ; len; len-- )
+	// 	{
+	// 		int sample = sinLerp(sine);
+			
+	// 		// output sample for left
+	// 		*target++ = sample;
+			
+	// 		// output inverted sample for right
+	// 		*target++ = -sample;
+			
+	// 		// sine += sine_freq + (sinLerp(lfo) >> lfo_shift);
+	// 		// lfo = (lfo + lfo_freq);
+
+	// 		sine += sine_freq;
+	// 	}
+	// 	sine = sine_freq; //ne pas enlever sinon ça plante
+	// // }
+	
+	
+	// // iprintf("\x1b[0;0Hcaca %d", mmStreamGetPosition());
+
+	// return length;
+}
+
 
 void play_sample(row, sample, vol, pitch, pan) {
-	if (sample != SFX_SYNC && sample != SFX_GBSYNC) {
-		mm_sound_effect sfx = {
-			{sample} ,			// id
-			(int)(1.0f * (pitch)),	// rate
-			0,		// handle
-			vol,	// volume
-			pan,	// panning
-		};
-	
-		mmLoadEffect(sample);
 
-		active_sounds[row] = mmEffectEx(&sfx); //mmeffect returns mmhandler into the array
-		//amb = mmEffectEx(&sfx); //mmeffect returns mmhandler into the array
+	if (globalPitch != 0 && superLiveMod == true) {
+		pitch = globalPitch;
 	}
+	// if (row != 3) {
+		if (sample != SFX_SYNC && sample != SFX_GBSYNC) {
+			mm_sound_effect sfx = {
+				{sample} ,			// id
+				(int)(1.0f * (pitch)),	// rate
+				0,		// handle
+				vol,	// volume
+				pan,	// panning
+			};
+			mmLoadEffect(sample);
+			active_sounds[row] = mmEffectEx(&sfx); //mmeffect returns mmhandler into the array
+		}
+	// } else { //row == 3
+	// 	// sine_freq = 900;
+	// 	// lfo_freq = 0;
+	// 	// lfo_shift = 0;
+	// 	// // mystream.sampling_rate	= 50000;					// sampling rate = 25khz
+	// 	// mmStreamUpdate();
+	// 	// gbSoundDecay = 5;
+	// }
 }
 
 void play_sample_sync(row, sample) {
@@ -629,9 +717,16 @@ void play_sample_sync(row, sample) {
 }
 
 void play_sound(int row, int sample, int vol, int pitch, int pan){
+
 	if (active_sounds[row]){ 				//if theres a sound playing in that row
 		mmEffectCancel(active_sounds[row]); //cancel it before trigging it again
 		mmUnloadEffect(sample);
+		// if (row == 3) {
+		// 	// mmStreamClose();
+		// 	sine_freq = 0;
+		// 	lfo_freq = 0;
+		// 	lfo_shift = 0;
+		// }
 	}
 	
 	if (row != 11) {
@@ -679,6 +774,9 @@ void play_column(){
 
 	pas++;
 	pas = pas % 16;
+
+	
+
 	if (step == 8) {
 		iaChangeRandom = !iaChangeRandom;
 		iaPreviousPatern = !iaPreviousPatern;
@@ -687,7 +785,19 @@ void play_column(){
 	if (pas == 0) {
 		tours++;
 		step++;
+		gbSoundDecay++;
 	}
+
+	if (gbSoundDecay > 0) {
+		gbSoundDecay--;
+	} else {
+		// soundPause(sound);
+		// mmStreamClose();
+		// sine_freq = 0;
+		// lfo_freq = 0;
+		// lfo_shift = 0;
+	}
+
 	if (tours == 32 && bpmIaAugmented == false && bpmFoliesActivated == true) {
 		current_song->bpm = current_song->bpm + 20;
 		draw_bpm_pattern();
@@ -723,27 +833,31 @@ void play_column(){
 	put_string(string_buff,22,18,0);
 	sprintf(string_buff,"step:%d ", (int) step);
 	put_string(string_buff,22,19,0);
-
-
+	// sprintf(string_buff,"chPtTwo %d", changedPatternTwo);
+	// put_string(string_buff,22,16,0);
+	// sprintf(string_buff,"One %d    ", changedPatternOne);
+	// put_string(string_buff,0,18,0);
 	//la condition tours est dans rand_pattern()
-	if (step < 4) {
-		if (iaChangeRandom == false) {
-			copy_pattern();
-			rand_pattern();
-			draw_pattern();
-			// iaChangeRandom = true;
-			iaChangeRandom = !iaChangeRandom;
+	if (IAAutoCymbal == true || IARandom == true) {
+		if (step < 4) {
+			if (iaChangeRandom == false) {
+				copy_pattern();
+				rand_pattern();
+				draw_pattern();
+				// iaChangeRandom = true;
+				iaChangeRandom = !iaChangeRandom;
+			}
+		} 
+		else if (tours > IALimit) {
+			if (iaPreviousPatern == false) {
+				paste_pattern();
+				draw_pattern();
+				iaPreviousPatern = !iaPreviousPatern;
+				//iaChangeRandom = false;
+			}
 		}
-	} 
-	else if (tours > IALimit) {
-		if (iaPreviousPatern == false) {
-			paste_pattern();
-			draw_pattern();
-			iaPreviousPatern = !iaPreviousPatern;
-			//iaChangeRandom = false;
-		}
+		
 	}
-	
 	for (row = 0; row < MAX_ROWS; row++){
 		val = pv->volume;
 		if (val != 0){
@@ -767,9 +881,48 @@ void play_column(){
 		// note_play(notes[1]&1, notes[1]>>4);
 
 
+		if (pv->playOrNot > 0) {
+
+			
+			// pv->playOrNotCount++;
+			// if (pv->playOrNotCount > 2) {
+			// 	pv->playOrNotCount = 0;
+			// }
+			
+
+			// iprintf("\x1b[0;0HplayOrNot %d", pv->playOrNot);
+			// iprintf("\x1b[1;0HUnSurCombien %d", pv->playOrNotCount);
+			if (pv->playOrNot > 0) {
+				if (pv->playOrNotCount % pv->playOrNot == 0) {
+					play_sound(row, 
+					current_song->channels[row].sample, 
+					current_song->channels[row].volume+55, 
+					pitch_table[pitch], 
+					pan);
+				} 
+				if (pv->playOrNotCount > pv->playOrNot - 1) {
+					pv->playOrNotCount = 0;
+				}
+			} 
+			// else if (pv->playOrNot == 3) {
+			// 	if (pv->playOrNotCount % 3 == 0) {
+			// 		play_sound(row, 
+			// 		current_song->channels[row].sample, 
+			// 		current_song->channels[row].volume+55, 
+			// 		pitch_table[pitch], 
+			// 		pan);
+			// 	} 
+			// 	if (pv->playOrNotCount > 2) {
+			// 		pv->playOrNotCount = 0;
+			// 	}
+			// }
+			pv->playOrNotCount++;
+			
+
+		}
 
 		// random perso
-		if (pv->random == true) // R
+		else if (pv->random == true) // R
 		{
 			int r = rand() % MAX_SAMPLES; /* random int between 0 and 24 */
 			//int sampleR = current_song->channels[row].sample;
@@ -881,12 +1034,18 @@ void dessiner_char(string, x, y, sertArien) {
 	iprintf("\x1b[%d;%dH%c", y, x, string);
 }
 
+void dessiner_int(integer, x, y, sertArien) {
+	consoleSelect(&topScreen);
+	iprintf("\x1b[%d;%dH%d", y, x, integer);
+}
+
 void draw_cursor(){
 	if (current_screen == SCREEN_PATTERN) {
 		if (draw_flag == 0){
 			xmod = 5+(cursor_x/4);
+			printf(rouge);
 			dessiner_char('X', cursor_x+xmod, cursor_y+3, 1);
-
+			printf(blanc);
 		}
 	} else if (current_screen == SCREEN_SONG) {
 		dessiner_char('X', 2+(cursor_x)+(cursor_x*5), cursor_y+3, 1);
@@ -907,16 +1066,50 @@ void draw_cell_status(){
 	//26, 27, 28, 29
 	pattern_row *pv = &(current_song->patterns[current_pattern_index].columns[cursor_x].rows[cursor_y]);
 	
+
 	if (pv->volume != 0){
+
+		if (pv->optionsUp == 0) {
+			put_string("   ",29,3+cursor_y,0);
+		} else if (pv->optionsUp > 0) {
+			printf(vert);
+			if (pv->optionsUp == 1) {
+				sprintf(string_buff, "o  ");
+				put_string(string_buff,29,3+cursor_y,0);
+			} else if (pv->optionsUp == 2) {
+				sprintf(string_buff, "O  ");
+				put_string(string_buff,29,3+cursor_y,0);
+			} else if (pv->optionsUp == 3) {
+				sprintf(string_buff, "Rnd");
+				put_string(string_buff,29,3+cursor_y,0);
+			}
+			
+			else if (pv->optionsUp > 3) {
+				sprintf(string_buff, "1/%x", pv->optionsUp-2);
+				put_string(string_buff,29,3+cursor_y,0);
+			} 
+			// else {
+			// 	sprintf(string_buff, "%x", pv->optionsUp);
+			// 	put_string(string_buff,29,3+cursor_y,0);	
+			// }
+			// sprintf(string_buff,"fesss %d", pv->optionsUp);
+			// put_string(string_buff,0,0,0);
+			printf(blanc);	
+		}
+
 		//pitch, pan, solo
 		if (pv->pitch == 0){
 			put_string("  ",26,3+cursor_y,0);
 		} else if (pv->pitch > 0){
+			printf(jaune);
 			sprintf(string_buff, "+%x", pv->pitch);
 			put_string(string_buff,26,3+cursor_y,0);
+			printf(blanc);
 		} else {
+			printf(jaune);
 			sprintf(string_buff, "-%x", pv->pitch*-1);
 			put_string(string_buff,26,3+cursor_y,0);
+			printf(blanc);
 		}
 		if (pv->pan == PAN_LEFT){
 			dessiner_char('L',28,3+cursor_y,0);
@@ -927,6 +1120,9 @@ void draw_cell_status(){
 			}
 	} else {
 		put_string("   ",26,3+cursor_y,0);
+		put_string("   ",29,(3+cursor_y)-1,0);
+		put_string("   ",29,(3+cursor_y)+1,0);
+		put_string("   ",29,3+cursor_y,0);
 	}
 }
 
@@ -939,26 +1135,71 @@ void move_cursor(int mod_x, int mod_y){
 		pattern_row *pv = &(current_song->patterns[current_pattern_index].columns[cursor_x].rows[cursor_y]);
 		
 		xmod = 5+(cursor_x/4);
+		// iprintf("\x1b[1;1Hbite %d ", pv->volume);
 		
+
 		put_string("   ",26,3+cursor_y,0);
 		
-		// random perso
-		if (pv->random == true) {
-
-			dessiner_char('R', cursor_x+xmod,cursor_y+3, 0);
-
-		} else if (pv->volume == 0){
-			dessiner_char('-', cursor_x+xmod,cursor_y+3, 0);
-		} else if (pv->volume == 1){
-			dessiner_char('o', cursor_x+xmod,cursor_y+3, 0);
-		} else {
-			dessiner_char('O', cursor_x+xmod,cursor_y+3, 0);
+		if (pv->optionsUp > 0) {
+			if (pv->optionsUp == 1) {
+				if (pv->volume == 0) {
+					dessiner_char('-', cursor_x+xmod,cursor_y+3, 0);
+				} else {
+					printf(vert);
+					dessiner_char('o', cursor_x+xmod,cursor_y+3, 0);
+					printf(blanc);
+				}
+			} else if (pv->optionsUp == 2) {
+				if (pv->volume == 0) {
+					dessiner_char('-', cursor_x+xmod,cursor_y+3, 0);
+				} else {
+					printf(vert);
+					dessiner_char('O', cursor_x+xmod,cursor_y+3, 0);
+					printf(blanc);	
+				}		
+			} else if (pv->optionsUp == 3) {
+				if (pv->random == false) {
+					dessiner_char('-', cursor_x+xmod,cursor_y+3, 0);					
+				} else {
+					printf(vert);
+					dessiner_char('R', cursor_x+xmod,cursor_y+3, 0);					
+					printf(blanc);			
+				}
+			}
+			else if (pv->optionsUp > 3) {
+				//char str[12];
+				if (pv->playOrNot == 0) {
+					dessiner_char('-', cursor_x+xmod,cursor_y+3, 0);
+				} else {
+					printf(vert);
+					dessiner_int(pv->playOrNot, cursor_x+xmod,cursor_y+3, 0);
+					printf(blanc);			
+				}
+			}
 		}
+		// random perso
+		// if (pv->random == true) {
+		// 	dessiner_char('R', cursor_x+xmod,cursor_y+3, 0);
+		// } 
+		// else if (pv->volume == 0){
+		//  	dessiner_char('-', cursor_x+xmod,cursor_y+3, 0);
+		// } 
+		else {
+			dessiner_char('-', cursor_x+xmod,cursor_y+3, 0);
+		}
+
+		// if (pv->volume == 1){
+		//  	dessiner_char('o', cursor_x+xmod,cursor_y+3, 0);		
+		// } else if (pv->volume == 2) {
+		//  	dessiner_char('O', cursor_x+xmod,cursor_y+3, 0);		
+		// } else {
+		//  	dessiner_char('-', cursor_x+xmod,cursor_y+3, 0);		
+		// }
 		
-		if (new_x >= MAX_COLUMNS) { 
+		if (new_x >= less_columns) { 
 			cursor_x = 0;
 		} else if (new_x < 0) {
-			cursor_x=MAX_COLUMNS-1;
+			cursor_x=less_columns-1;
 		} else cursor_x=new_x;
 		
 		if (new_y >= MAX_ROWS) {
@@ -1075,7 +1316,7 @@ void clear_song_cursor(){
 }
 
 void draw_status(){
-		put_string(status_text[status],0,19,0);
+		// put_string(status_text[status],0,19,0);
 }
 
 void draw_temp_status(int temp_status){
@@ -1090,10 +1331,37 @@ void set_status(int new_status){
 void draw_pattern(void) __attribute__ ((section(".iwram")));
 
 void draw_bpm_pattern() {
-	sprintf(string_buff,"BPM: %.2d (B + up/down) (X/Y)", (int) current_song->bpm);
+	printf(violet);
+	sprintf(string_buff,"BPM:", (int) current_song->bpm);
 	put_string(string_buff,0,16,0);
-	sprintf(string_buff,"Random note : B", (int) current_song->bpm);
-	put_string(string_buff,0,17,0);
+	printf(blanc);
+	sprintf(string_buff,"%.2d ", (int) current_song->bpm);
+	put_string(string_buff,5,16,0);
+	sprintf(string_buff,"X/Y");
+	put_string(string_buff,9,16,0);
+	if (superLiveMod== true) {
+		printf(jaune);
+		sprintf(string_buff,"Glob pitch:%x   ", (int) globalPitch);
+		put_string(string_buff,17,0,0);
+	}
+	printf(violet);
+	sprintf(string_buff,"Delete note:", (int) current_song->bpm);
+	put_string(string_buff,0,18,0);
+	printf(blanc);
+	sprintf(string_buff,"B", (int) current_song->bpm);
+	put_string(string_buff,13,18,0);
+	printf(violet);
+	sprintf(string_buff,"Note options:", (int) current_song->bpm);
+	put_string(string_buff,0,20,0);
+	printf(blanc);
+	sprintf(string_buff,"A+pad", (int) current_song->bpm);
+	put_string(string_buff,14,20,0);
+	printf(violet);
+	sprintf(string_buff,"Less steps:", (int) current_song->bpm);
+	put_string(string_buff,0,22,0);
+	printf(blanc);
+	sprintf(string_buff,"B+Le/Ri", (int) current_song->bpm);
+	put_string(string_buff,12,22,0);
 }
 
 void draw_pattern(){ 
@@ -1109,13 +1377,16 @@ void draw_pattern(){
 	clear_screen();		
 	consoleSelect(&topScreen);
 
-	iprintf("\x1b[0;-1H PATTERN %02d ", current_pattern_index);
-	//iprintf("\x1b[0;0Hbite %d ", MSL_BANKSIZE);
+	printf(cyan); //cyan
+	iprintf("\x1b[0;0HPATTERN %02d ", current_pattern_index);
+	printf(blanc); //blanc
 
-	sprintf(string_buff,"IA limit:%d ", (int) IALimit);
-	put_string(string_buff,18,0,0);	
-	sprintf(string_buff,"B + Left/Right");
-	put_string(string_buff,16,1,0);	
+	// sprintf(string_buff,"IA limit:%d ", (int) IALimit);
+	// put_string(string_buff,20,0,0);	
+	// sprintf(string_buff,"B + ->");
+	// put_string(string_buff,26,1,0);	
+	// sprintf(string_buff,"<-");
+	// put_string(string_buff,30,2,0);	
 
 	draw_bpm_pattern();
 	
@@ -1127,18 +1398,25 @@ void draw_pattern(){
 	for (r = 0; r < MAX_ROWS; r++){
 
 		i = 0;			
-		for (c = 0; c < MAX_COLUMNS; c++){
+		for (c = 0; c < less_columns; c++){
 			if ( c == 4 || c == 8 || c == 12) { //print extra space for 1/4 divide
 				rowbuff[i] =' ';
 				i++;
 			}
 
-			if (current_song->patterns[current_pattern_index].columns[c].rows[r].random == true) {
+			if (current_song->patterns[current_pattern_index].columns[c].rows[r].playOrNot > 0) {
+				int currentPlayOrNot = current_song->patterns[current_pattern_index].columns[c].rows[r].playOrNot;
+				if (currentPlayOrNot > 0) {
+					char cur = currentPlayOrNot+'0'; //transforme le int en string
+					rowbuff[i] = cur;
+				}
+			}
+			else if (current_song->patterns[current_pattern_index].columns[c].rows[r].random == true) {
 				rowbuff[i] ='R';
 			} else if (current_song->patterns[current_pattern_index].columns[c].rows[r].volume == 0){
 				rowbuff[i] ='-';
 			} else if (current_song->patterns[current_pattern_index].columns[c].rows[r].volume == 1) {
-				rowbuff[i] ='o'; 
+				rowbuff[i] ='o';
 			} else {
 				rowbuff[i] ='O';
 			}
@@ -1396,7 +1674,7 @@ void play_song(){
 
 void next_column(){
 	if (play == PLAY_PATTERN){  //pattern play mode
-		if (current_column == MAX_COLUMNS){
+		if (current_column == less_columns){
 			playing_pattern_index=current_pattern_index;
 			current_column = 0;
 		}
@@ -1411,7 +1689,7 @@ void next_column(){
 		}
 	} else { //song or live play mode
 	
-		if (current_column == MAX_COLUMNS){
+		if (current_column == less_columns){
 			if ((play == PLAY_LIVE) && (play_next!=NO_PATTERN)){
 				if (current_screen == SCREEN_SONG){
 					clear_song_cursor();
@@ -1471,7 +1749,7 @@ int is_empty_pattern(int pattern_index){
 	int c,r;
 	
 	for (r=0; r<MAX_ROWS; r++){
-		for (c=0; c<MAX_COLUMNS; c++){
+		for (c=0; c<less_columns; c++){
 			if (current_song->patterns[pattern_index].columns[c].rows[r].volume != 0){
 				return 0;
 			}
@@ -1960,6 +2238,8 @@ void settings_menu(int menu_option, int action){
 void process_input(){
 
 	int keys_pressed, keys_held, keys_released, index;
+
+	
 			
 	//swiWaitForVBlank();
 	scanKeys();
@@ -1984,31 +2264,90 @@ void process_input(){
 
 	if (bottomPrinted == false) {
 		consoleSelect(&bottomScreen);
-		iprintf("\x1b[0;0H(%d,%d)", touch.px, touch.py);
+		iprintf("\x1b[23;23H(%d,%d)", touch.px, touch.py);
+		printf(rouge);
+		iprintf("\x1b[0;3H-- Works if not playing --");
+		printf(blanc);
+
+		iprintf("\x1b[2;0HSync :         (track 11)" );
 		if (syncDSMode == true) {
-			iprintf("\x1b[2;0HSync : | On  | (track 11)" );
-			if (typeOfSyncs == 0) {
-				iprintf("\x1b[4;0HType sync : | + || - | Volca ");
-			} else if (typeOfSyncs == 1) {
-				iprintf("\x1b[4;0HType sync : | + || - | Lsdj ");
-			}
-			else if (typeOfSyncs == 2) {
-				iprintf("\x1b[4;0HType sync : | + || - | Wolf ");
-			}
+			printf(vert);
+			iprintf("\x1b[2;7H| On  |" );
+			printf(blanc);
+			iprintf("\x1b[4;0HType sync : only Volca for now");
+			// if (typeOfSyncs == 0) {
+			// 	iprintf("\x1b[4;12H| - || + | Volca");
+			// } else if (typeOfSyncs == 1) {
+			// 	iprintf("\x1b[4;12H| - || + | Lsdj ");
+			// }
+			// else if (typeOfSyncs == 2) {
+			// 	iprintf("\x1b[4;12H| - || + | Wolf ");
+			// }
 		} else {
 			iprintf("\x1b[4;0H                                        ");
-			iprintf("\x1b[2;0HSync : | Off | (track 11)" );
+			// iprintf("\x1b[2;0HSync : | Off | (track 11)" );
+			printf(vert);
+			iprintf("\x1b[2;7H| Off |" );
+			printf(blanc);
 		}
+		
+		iprintf("\x1b[6;0HIA Random :" );
+		printf(vert);
 		if (IARandom == true) {
-			iprintf("\x1b[6;0HIA Random : | On  |" );
+			iprintf("\x1b[6;12H| On  |" );
 		} else {
-			iprintf("\x1b[6;0HIA Random : | Off |" );
+			iprintf("\x1b[6;12H| Off |" );
 		}
+		printf(blanc);
+		iprintf("\x1b[8;0HIA Crazy bpm :" );
+		printf(vert);
 		if (bpmFoliesActivated == true) {
-			iprintf("\x1b[8;0HIA Crazy bpm : | On  |" );
+			iprintf("\x1b[8;15H| On  |" );
 		} else {
-			iprintf("\x1b[8;0HIA Crazy bpm : | Off |" );
+			iprintf("\x1b[8;15H| Off |" );
 		}
+		printf(blanc);
+		iprintf("\x1b[11;0HSuper live :" );
+		if (superLiveMod == true) {
+			printf(vert);
+			iprintf("\x1b[11;13H| On  |" );
+			printf(blanc);
+			iprintf("\x1b[13;0HR/L for global pitch  ");
+			printf(vert);
+			iprintf("\x1b[13;21H| Reset |");
+			printf(blanc);
+			iprintf("\x1b[14;0H                              ");
+		} else {
+			iprintf("\x1b[11;0HSuper live :" );
+			printf(vert);
+			iprintf("\x1b[11;13H| Off |" );
+			printf(blanc);
+			iprintf("\x1b[13;0HR/L for select pattern        ");
+			iprintf("\x1b[14;0HSelect+R/L for menu           ");
+		}
+
+		iprintf("\x1b[17;0HIA limit:");
+		printf(vert);
+		iprintf("\x1b[17;10H| + || - |");
+		printf(blanc);
+		iprintf("\x1b[17;21H%d", IALimit);
+		iprintf("\x1b[19;0HLoop patterns" );
+		printf(vert);
+		if (autoLoopPattern == true) {
+			iprintf("\x1b[19;16H| On  |" );
+		} else {
+			iprintf("\x1b[19;16H| Off |" );
+		}
+		printf(blanc);
+
+		iprintf("\x1b[21;0HIA Auto Cymbal" );
+		printf(vert);
+		if (IAAutoCymbal == true) {
+			iprintf("\x1b[21;17H| On  |" );
+		} else {
+			iprintf("\x1b[21;17H| Off |" );
+		}
+		printf(blanc);
 		consoleSelect(&topScreen);
 		bottomPrinted = true;
 	}
@@ -2053,6 +2392,56 @@ void process_input(){
 		}
 	}
 
+	//super live mod on/off
+	if ((keys_held & KEY_TOUCH) && touch.px >= 109 && touch.px <= 157 && touch.py >= 88 && touch.py <= 96)
+	{
+		if (touchedBtn == false) {
+			superLiveMod = !superLiveMod;
+			touchedBtn = true;
+		}
+	}
+	//reset global pitch
+	if ((keys_held & KEY_TOUCH) && touch.px >= 173 && touch.px <= 238 && touch.py >= 103 && touch.py <= 114)
+	{
+		if (touchedBtn == false) {
+			globalPitch = 0;
+			touchedBtn = true;
+		}
+	}
+
+	//IA limit ++
+	if ((keys_held & KEY_TOUCH) && touch.px >= 85 && touch.px <= 117 && touch.py >= 136 && touch.py <= 146)
+	{
+		if (touchedBtn == false) {
+			IALimit++;
+			touchedBtn = true;
+		}
+	}
+	//IA limit --
+	if ((keys_held & KEY_TOUCH) && touch.px >= 126 && touch.px <= 157 && touch.py >= 136 && touch.py <= 146)
+	{
+		if (touchedBtn == false) {
+			IALimit--;
+			touchedBtn = true;
+		}
+	}
+
+	//IA auto cymbal
+	if ((keys_held & KEY_TOUCH) && touch.px >= 141 && touch.px <= 190 && touch.py >= 167 && touch.py <= 177)
+	{
+		if (touchedBtn == false) {
+			IAAutoCymbal = !IAAutoCymbal;
+			touchedBtn = true;
+		}
+	}
+	//IA auto loop patern
+	if ((keys_held & KEY_TOUCH) && touch.px >= 133 && touch.px <= 181 && touch.py >= 151 && touch.py <= 161)
+	{
+		if (touchedBtn == false) {
+			autoLoopPattern = !autoLoopPattern;
+			touchedBtn = true;
+		}
+	}
 
 	if (typeOfSyncs > 2) { //augmenter si je met plus de sons de sync
 		typeOfSyncs = 0; 
@@ -2065,27 +2454,23 @@ void process_input(){
 	if (current_screen == SCREEN_PATTERN){	
 		pattern_row *pv;
 
-		if ( keys_pressed & KEY_B ) {			
-			if (keys_held & KEY_SELECT ) {
-				copy_pattern();
-				rand_pattern();
-				draw_pattern();
-			}
-		}
+		// if ( keys_pressed & KEY_B ) {			
+		// 	if (keys_held & KEY_SELECT ) {
+		// 		copy_pattern();
+		// 		rand_pattern();
+		// 		draw_pattern();
+		// 	}
+		// }
 
-		if ( keys_pressed & KEY_A ) {	
-			if (keys_held & KEY_B ) { 			//if A is already held, delete cell
-			pv = &(current_song->patterns[current_pattern_index].columns[cursor_x].rows[cursor_y]);
-				pv->volume = 0;
-				pv->pitch = 0;
-				//pv->pan = 0;
-				draw_cell_status();
-			} else if (keys_held & KEY_SELECT ) {
-				copy_pattern();
-				clear_pattern();
-				draw_pattern();
-			}
-		}
+		// if ( keys_pressed & KEY_A ) {	
+		// 	if (keys_held & KEY_B ) { 		
+		// 		draw_cell_status();
+		// 	} else if (keys_held & KEY_SELECT ) {
+		// 		copy_pattern();
+		// 		clear_pattern();
+		// 		draw_pattern();
+		// 	}
+		// }
 		
 		if ( keys_pressed & KEY_LEFT ) {
 			pv = &(current_song->patterns[current_pattern_index].columns[cursor_x].rows[cursor_y]);
@@ -2108,9 +2493,26 @@ void process_input(){
 				// 		}
 				// 		draw_cell_status();
 				// 	}	
-				IALimit--;
-				sprintf(string_buff,"IA limit:%d ", (int) IALimit);
-				put_string(string_buff,18,0,0);		
+				if (less_columns > 0) {
+					less_columns--;
+					iprintf("\x1b[1;1H%d", less_columns);	
+					for (int i=0; i<MAX_ROWS;i++) {
+						if (less_columns == 11) {
+							// countColons = less_columns;		
+							countColons = 1;
+						}
+						if (less_columns == 7) {
+							countColons = 2;						
+						}
+						if (less_columns == 3) {
+							countColons = 3;						
+						}
+						iprintf("\x1b[%d;%dH ", i+3, (less_columns-countColons)+8);
+					}
+				}
+				// IALimit--;
+				// sprintf(string_buff,"IA limit:%d ", (int) IALimit);
+				// put_string(string_buff,20,0,0);		
 			} else {		
 				move_cursor(-1,0);
 			}
@@ -2135,9 +2537,22 @@ void process_input(){
 			// 		}
 			// 		draw_cell_status();
 			// 	} 
-				IALimit++;
-				sprintf(string_buff,"IA limit:%d ", (int) IALimit);
-				put_string(string_buff,18,0,0);
+				if (less_columns < 16) {
+					less_columns++;
+					iprintf("\x1b[1;1H%d", less_columns);
+					for (int i=0; i<MAX_ROWS;i++) {
+						if (less_columns == 11) {
+							// countColons = less_columns;		
+							countColons = 1;
+						} else {
+							countColons = 0;
+						}
+						iprintf("\x1b[%d;%dH-", i+3, (less_columns-countColons)+7);				
+					}
+				}
+				// IALimit++;
+				// sprintf(string_buff,"IA limit:%d ", (int) IALimit);
+				// put_string(string_buff,20,0,0);
 			} else {		
 				move_cursor(1,0);
 			}			
@@ -2150,27 +2565,33 @@ void process_input(){
 			
 			if (pv->volume == 0){
 				pv->pan = PAN_OFF;
-				if (alternateVol == 1) {
-					pv->volume=2;
-				} else {
+				// if (alternateVol == 1) {
+				// 	pv->volume=2;
+				// } else {
 					pv->volume=1;
-				}
+					pv->optionsUp = 1;
+					soundsInCurrentPattern++;
+					//j'enregistre si y'a des sons dans ce pattern là ou pas
+					//si oui alors il loopera avec les autres pattern
+					soundsInPattern[current_pattern_index] = soundsInCurrentPattern;
+
+				// }
 			} 
-			else if (pv->volume > 0)
-			{
-				if (pv->volume == 1) {
-					alternateVol = 1;
-				} else {
-					alternateVol = 2;
-				}
-				pv->volume=0;
-			}
-			// alternateVol++;
-			// if (alternateVol == 4) {
-			// 	alternateVol = 0;
+			// else if (pv->volume > 0)
+			// {
+			// 	// if (pv->volume == 1) {
+			// 	// 	alternateVol = 1;
+			// 	// } else {
+			// 	// 	alternateVol = 2;
+			// 	// }
+			// 	//pv->volume=0;
+			// 	// soundsInCurrentPattern--;
+			// 	// soundsInPattern[current_pattern_index] = soundsInCurrentPattern;
 			// }
+
 			draw_cell_status();
 		}
+
 
 		//uniquement pour la DS
 		if ( keys_pressed & KEY_X ) {
@@ -2190,30 +2611,47 @@ void process_input(){
 		if ( keys_pressed & KEY_UP ) {
 			pv = &(current_song->patterns[current_pattern_index].columns[cursor_x].rows[cursor_y]);
 			if (keys_held & KEY_A ) {
-				if (pv->volume == 0){
-					pv->pan = PAN_OFF;
-				} 
-				if (pv->volume < 2){
-					pv->volume++;
+				// if (pv->volume == 0){
+				// 	pv->pan = PAN_OFF;
+				// } 
+				// if (pv->volume < 2){
+				// 	pv->volume++;
+				// }
+				pv->optionsUp++;
+				if (pv->optionsUp == 1) {
+					pv->volume = 1;
+				} else if (pv->optionsUp == 2) {
+					pv->volume = 2;
+				} else if (pv->optionsUp == 3) {
+					pv->random = true;
+				} else if (pv->optionsUp == 4) {
+					pv->random = false;
 				}
+				if (pv->optionsUp > 3) {
+					pv->playOrNot++;
+					if (pv->playOrNot == 1) {
+						pv->playOrNot = 2;
+					}
+				}
+				
 				draw_cell_status();
 			} else if (keys_held & KEY_B ) {
 				
-				current_song->bpm = current_song->bpm + 10;
-				draw_bpm_pattern();
+				// current_song->bpm = current_song->bpm + 10;
+				// draw_bpm_pattern();
 
-			} else if (keys_held & KEY_SELECT ) {
-				//MUTE/UNMUTE CHANNEL
-				if (current_song->channels[cursor_y].status != MUTED){
-					current_song->channels[cursor_y].status = MUTED;
-					dessiner_char('M',29,cursor_y+ymod,0);
-				} else {
-					current_song->channels[cursor_y].status = NOT_MUTED;
-					dessiner_char(' ',29,cursor_y+ymod,0);			
-				}
-			} else if (keys_held & KEY_START ) {
-				//DO NOTHING
-			} else {
+			} 
+			// else if (keys_held & KEY_SELECT ) {
+			// 	//MUTE/UNMUTE CHANNEL
+			// 	if (current_song->channels[cursor_y].status != MUTED){
+			// 		current_song->channels[cursor_y].status = MUTED;
+			// 		dessiner_char('M',29,cursor_y+ymod,0);
+			// 	} else {
+			// 		current_song->channels[cursor_y].status = NOT_MUTED;
+			// 		dessiner_char(' ',29,cursor_y+ymod,0);			
+			// 	}
+			// } 
+			else {
 				move_cursor(0,-1);
 			}
 
@@ -2227,37 +2665,68 @@ void process_input(){
 			pv = &(current_song->patterns[current_pattern_index].columns[cursor_x].rows[cursor_y]);			
 			if (keys_held & KEY_B ) {
 				
-				current_song->bpm = current_song->bpm - 10;
-				draw_bpm_pattern();
+				// current_song->bpm = current_song->bpm - 10;
+				// draw_bpm_pattern();
 
 			} else if (keys_held & KEY_A ) {
-				if (pv->volume > 0){
-					pv->volume--;
+				// if (pv->volume > 0){
+				// 	pv->volume--;
+				// }
+				pv->optionsUp--;
+				if (pv->optionsUp == 0) {
+					pv->volume = 0;
+					pv->playOrNot = 0;
 				}
+				else if (pv->optionsUp == 1) {
+					pv->volume = 1;
+					pv->playOrNot = 0;
+				} else if (pv->optionsUp == 2) {
+					pv->volume = 2;
+					pv->random = false;
+					pv->playOrNot = 0;
+				} else if (pv->optionsUp == 3) {
+					pv->random = true;
+					pv->playOrNot = 0;
+				} else if (pv->optionsUp == 4) {
+					pv->random = false;
+				}
+				if (pv->optionsUp > 3) {
+					pv->playOrNot--; //jouer un sur 2, 1/3 etc...
+					if (pv->playOrNot == 1) {
+						pv->playOrNot = 2;
+					}
+				}
+
+				// if (pv->playOrNot > 0) {
+				// 	pv->playOrNot--;
+				// }
+				// if (pv->playOrNot == 1) {
+				// 	pv->playOrNot = 2;
+				// }
 				draw_cell_status();
-			} else if (keys_held & KEY_SELECT ) {
-				int i;
-				if (current_song->channels[cursor_y].status != SOLOED){
-				//SOLO/UNSOLO CHANNEL
-					for (i = 0; i < MAX_ROWS; i++){					
-						if (current_song->channels[i].status != SOLOED){
-							current_song->channels[i].status = MUTED;
-							dessiner_char('M',29,i+ymod,0);
-						} else {
-							dessiner_char('S',29,i+ymod,0);
-						}
-					}
-					current_song->channels[cursor_y].status = SOLOED;
-					dessiner_char('S',29,cursor_y+ymod,0);
-				} else {
-					for (i = 0; i < MAX_ROWS; i++){					
-						current_song->channels[i].status = NOT_MUTED;
-						dessiner_char(' ',29,i+ymod,0);
-					}
-				}			
-			} else if (keys_held & KEY_START ) {
-				//DO NOTHING
-			} else {
+			} 
+			// else if (keys_held & KEY_SELECT ) {
+			// 	int i;
+			// 	if (current_song->channels[cursor_y].status != SOLOED){
+			// 	//SOLO/UNSOLO CHANNEL
+			// 		for (i = 0; i < MAX_ROWS; i++){					
+			// 			if (current_song->channels[i].status != SOLOED){
+			// 				current_song->channels[i].status = MUTED;
+			// 				dessiner_char('M',29,i+ymod,0);
+			// 			} else {
+			// 				dessiner_char('S',29,i+ymod,0);
+			// 			}
+			// 		}
+			// 		current_song->channels[cursor_y].status = SOLOED;
+			// 		dessiner_char('S',29,cursor_y+ymod,0);
+			// 	} else {
+			// 		for (i = 0; i < MAX_ROWS; i++){					
+			// 			current_song->channels[i].status = NOT_MUTED;
+			// 			dessiner_char(' ',29,i+ymod,0);
+			// 		}
+			// 	}			
+			// } 
+			else {
 				move_cursor(0,1);
 			}
 			set_bpm_to_millis();
@@ -2268,8 +2737,8 @@ void process_input(){
 			// draw_pattern();
 		}
 		
-		if ( (keys_pressed & KEY_START)) {
-			pv = &(current_song->patterns[current_pattern_index].columns[cursor_x].rows[cursor_y]);			
+		if ( (keys_pressed & KEY_START || keys_pressed & KEY_SELECT)) {
+			//pv = &(current_song->patterns[current_pattern_index].columns[cursor_x].rows[cursor_y]);			
 			if (play == PLAY_STOPPED){ 
 				play_pattern();
 				pas = 0;
@@ -2277,45 +2746,113 @@ void process_input(){
 				step = 0;
 				iaChangeRandom = false;
 				iaPreviousPatern = false;
+				// mmStreamOpen( &mystream );
 			}
-			else if (play == PLAY_LIVE){ //play this column next
-				if ( keys_held & KEY_SELECT ) {
-					stop_song();
-				}
-			} else {
+			// else if (play == PLAY_LIVE){ //play this column next
+			// 	if ( keys_held & KEY_SELECT ) {
+			// 		stop_song();
+			// 		// sine_freq = 0;
+			// 		// lfo_freq = 0;
+			// 		// lfo_shift = 0;
+			// 		// mmStreamUpdate();
+			// 		changedPatternOne = 0;
+			// 		step = 0;
+			// 		tours = 0;
+			// 	}
+			// } 
+			else {
 				stop_song();
+				// soundPause(sound);
+				// sine_freq = 0;
+				// lfo_freq = 0;
+				// lfo_shift = 0;
+				changedPatternOne = 0;
+				step = 0;
+				tours = 0;
+				// sprintf(string_buff,"fesss %d", changedPatternOne);
+				// put_string(string_buff,0,0,0);
+				// mmStreamUpdate();
+				// mmStreamClose();
+				// mmStreamOpen( &mystream );
 			}
 		}
 					
-		if ( keys_pressed & KEY_R ) {
-			if (keys_held & KEY_SELECT ) {
-				current_screen = SCREEN_SONG;
-				draw_screen();					
+		//toujours dans screen PATTERN
+		//si y'a des sons dan le pattern je le loop avec
+		//les autres pattern dans lesquels il y a des sons
+		if (autoLoopPattern == true) {
+			if (step == 3 || step == 7) {
+				changedPatternOne = 0;
 			}
-			else if (keys_held & KEY_A){
-				paste_pattern();
-				draw_pattern();
-			} else {
-				if (current_pattern_index < (MAX_PATTERNS-1)) {
-					current_pattern_index+=1;
+			if (tours % 4 == 0) { //ça joue tous les 4 temps
+				if (soundsInPattern[current_pattern_index+1] > 0) {
+					if (changedPatternOne == 0) {
+						current_pattern_index = current_pattern_index+1;
+						draw_pattern();
+						changedPatternOne = 1;
+						//changedPatternTwo = false;
+					}
+				} 
+				else if (changedPatternOne == 0) {
+					current_pattern_index = 0;
+					draw_pattern();
+					changedPatternOne = 1;
+				}
+			}
+		}
+		if (superLiveMod == false) {
+			if ( keys_pressed & KEY_R ) {
+				if (keys_held & KEY_SELECT ) {
+					//je vire les pages song et settings
+					// current_screen = SCREEN_SONG; 
+					current_screen = SCREEN_SAMPLES;
+					draw_screen();					
+				}
+				// else if (keys_held & KEY_A){
+				// 	paste_pattern();
+				// 	draw_pattern();
+				// } 
+				else {
+					if (current_pattern_index < (MAX_PATTERNS-1)) {
+						current_pattern_index+=1;
+					}
+					draw_pattern();
+				}			
+			}
+			if ( keys_pressed & KEY_L ) {
+				// if (keys_held & KEY_A){
+				// 	copy_pattern();
+				// } else 
+				if (current_pattern_index > 0) {
+					current_pattern_index-=1;				
 				}
 				draw_pattern();
-			}			
-		}
-
-		if ( keys_pressed & KEY_L ) {
-			if (keys_held & KEY_A){
-				copy_pattern();
-			} else if (current_pattern_index > 0) {
-				current_pattern_index-=1;				
 			}
-			draw_pattern();
+		} else {
+			if ( keys_pressed & KEY_R ) {
+				if (globalPitch < 6000) {
+					globalPitch+= 20;
+				}
+				draw_bpm_pattern();
+			}
+			if ( keys_pressed & KEY_L ) {
+				if (globalPitch > 0) {
+					globalPitch-= 20;
+				}
+				draw_bpm_pattern();
+			}
 		}
 
-		//random perso
+
+		//B delete supprimer tout
 		if ( (keys_pressed & KEY_B)) {
 			pv = &(current_song->patterns[current_pattern_index].columns[cursor_x].rows[cursor_y]);
-			pv->random = !pv->random;
+			// pv->random = !pv->random;
+			pv->volume = 0;
+			pv->playOrNot = 0;
+			pv->random = false;
+			soundsInCurrentPattern--;
+			soundsInPattern[current_pattern_index] = soundsInCurrentPattern;
 		}
 
 	}
@@ -2323,15 +2860,15 @@ void process_input(){
 	//SONG SCREEN INPUTS
 	else if (current_screen == SCREEN_SONG){
 		if ( keys_pressed & KEY_LEFT ) {
-			if (keys_held & KEY_A ) {
-				if (current_song->order[order_page+(cursor_x*10)+cursor_y] > 0){
-					current_song->order[order_page+(cursor_x*10)+cursor_y]-=1;
-					draw_song();
-				}
-			} else {
-				move_cursor(-1,0);
+				if (keys_held & KEY_A ) {
+					if (current_song->order[order_page+(cursor_x*10)+cursor_y] > 0){
+						current_song->order[order_page+(cursor_x*10)+cursor_y]-=1;
+						draw_song();
+					}
+				} else {
+					move_cursor(-1,0);
+			}
 		}
-	}
 		if ( keys_pressed & KEY_RIGHT ) {
 			if (keys_held & KEY_A ) {
 					if (current_song->order[order_page+(cursor_x*10)+cursor_y] < MAX_PATTERNS-1){
@@ -2370,61 +2907,61 @@ void process_input(){
 			move_cursor(0,1);
 			}
 		}
-	
-	if ( keys_pressed & KEY_A ) {			
-		if (keys_held & KEY_SELECT ) {
-			paste_order(&current_song->order[order_page+(cursor_x*10)+cursor_y]);
-			move_cursor(0,1);
-			draw_song();
-		} else if (keys_held & KEY_B ) {
-			copy_order(&current_song->order[order_page+(cursor_x*10)+cursor_y]);
-			current_song->order[order_page+(cursor_x*10)+cursor_y]=-1;
-			draw_song();
-		} else if (keys_held == KEY_A ){
-			if (current_song->order[order_page+(cursor_x*10)+cursor_y] == NO_ORDER){
-				current_song->order[order_page+(cursor_x*10)+cursor_y] = 0;
+		
+		// if ( keys_pressed & KEY_A ) {			
+		// 	if (keys_held & KEY_SELECT ) {
+		// 		paste_order(&current_song->order[order_page+(cursor_x*10)+cursor_y]);
+		// 		move_cursor(0,1);
+		// 		draw_song();
+		// 	} else if (keys_held & KEY_B ) {
+		// 		copy_order(&current_song->order[order_page+(cursor_x*10)+cursor_y]);
+		// 		current_song->order[order_page+(cursor_x*10)+cursor_y]=-1;
+		// 		draw_song();
+		// 	} else if (keys_held == KEY_A ){
+		// 		if (current_song->order[order_page+(cursor_x*10)+cursor_y] == NO_ORDER){
+		// 			current_song->order[order_page+(cursor_x*10)+cursor_y] = 0;
+		// 			draw_song();
+		// 		}
+		// 	}  
+		// }
+		
+		if ( keys_pressed & KEY_L ) {
+			if ( keys_held & KEY_SELECT ) {
+				current_screen = SCREEN_PATTERN;
+				draw_screen();
+			} else {
+				order_page=0;
 				draw_song();
 			}
-		}  
-	}
-	
-	if ( keys_pressed & KEY_L ) {
-		if ( keys_held & KEY_SELECT ) {
-			current_screen = SCREEN_PATTERN;
-			draw_screen();
-		} else {
-			order_page=0;
-			draw_song();
 		}
-	}
-	
-	if ( keys_pressed & KEY_R ) {
-		if ( keys_held & KEY_SELECT ) {
-			current_screen = SCREEN_SAMPLES;
-			draw_screen();
-		} else {
-			order_page=50;
-			draw_song();
-		}
-	}
-			
-	if ( keys_pressed & KEY_START ) {
-		if (play == PLAY_STOPPED){ //start playing
-			play_song();
-		} else if (play == PLAY_LIVE){ //if livemode, queue next pattern
+		
+		if ( keys_pressed & KEY_R ) {
 			if ( keys_held & KEY_SELECT ) {
-				stop_song();
+				current_screen = SCREEN_SAMPLES;
+				draw_screen();
 			} else {
-				if (current_song->order[order_page+(cursor_x*10)+cursor_y] != NO_ORDER){
-					if (play_next != NO_ORDER){
-						clear_last_song_queued_cursor();
-					}
-					play_next = order_page+(cursor_x*10)+cursor_y;
-					draw_song_queued_cursor();
-				}
+				order_page=50;
+				draw_song();
 			}
-		} else { 			//stop playing
-			stop_song();	
+		}
+				
+		if ( keys_pressed & KEY_START ) {
+			if (play == PLAY_STOPPED){ //start playing
+				play_song();
+			} else if (play == PLAY_LIVE){ //if livemode, queue next pattern
+				if ( keys_held & KEY_SELECT ) {
+					stop_song();
+				} else {
+					if (current_song->order[order_page+(cursor_x*10)+cursor_y] != NO_ORDER){
+						if (play_next != NO_ORDER){
+							clear_last_song_queued_cursor();
+						}
+						play_next = order_page+(cursor_x*10)+cursor_y;
+						draw_song_queued_cursor();
+					}
+				}
+			} else { 			//stop playing
+				stop_song();	
 			}
 		}
 	} 
@@ -2465,33 +3002,39 @@ void process_input(){
 		
 		if ( keys_pressed & KEY_A ) {
 			if ((keys_held ^ KEY_A) == 0){
-				//c'est ici que le sample est joué !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 				samples_menu(cursor_y, cursor_x, MENU_ACTION);
 			}
 		}
 		
-		if ( keys_pressed & KEY_B ) {
-			if ( keys_held & KEY_SELECT ) {
-				if (cursor_x == 0){
-					rand_samples();
-					draw_samples();
+		// if ( keys_pressed & KEY_B ) {
+		// 	if ( keys_held & KEY_SELECT ) {
+		// 		if (cursor_x == 0){
+		// 			rand_samples();
+		// 			draw_samples();
+		// 		}
+		// 	}
+		// }
+
+
+		if (superLiveMod == false) {
+			if ( keys_pressed & KEY_L ) {
+				if ( keys_held & KEY_SELECT ) {
+					//je vire les pages song et settings
+					//current_screen = SCREEN_SONG;
+					current_screen = SCREEN_PATTERN;
+					//efface les résiduts de lettres
+					iprintf("\x1b[2;0H                              ");
+					draw_screen();
 				}
 			}
 		}
-
-		if ( keys_pressed & KEY_L ) {
-			if ( keys_held & KEY_SELECT ) {
-				current_screen = SCREEN_SONG;
-				draw_screen();
-			}
-		}
 			
-		if ( keys_pressed & KEY_R ) {
-			if ( keys_held & KEY_SELECT ) {
-				current_screen = SCREEN_SETTINGS;
-				draw_screen();
-			}
-		}
+		// if ( keys_pressed & KEY_R ) {
+		// 	if ( keys_held & KEY_SELECT ) {
+		// 		current_screen = SCREEN_SETTINGS;
+		// 		draw_screen();
+		// 	}
+		// }
 	}	
 	
 	//SETTINGS SCREEN INPUTS
@@ -2675,6 +3218,74 @@ void setup_display(){
 // 	iprintf("\x1b[%d;%dH%c", y, x, string);
 // }
 
+// int sound = 0;
+
+//joue son gameboy
+// soundEnable();
+// sound = soundPlayPSG(50, 4000, 64, 64);	
+// soundPause(sound);
+//fin joue son gameboy
+
+//int sndStatus = 0;
+// int Pressed;
+// int Held;
+// int Released;
+
+// //son gameboy
+// int sine;		// sine position
+// int lfo;		// LFO position
+
+// //-----------------------------------------------------------------------------
+// enum {
+// //-----------------------------------------------------------------------------
+// 	// waveform base frequency
+// 	sine_freq = 500,
+	
+// 	// LFO frequency
+// 	lfo_freq = 3,
+	
+// 	// LFO output shift amount
+// 	lfo_shift = 4,
+	
+// 	// blue backdrop
+// 	bg_colour = 13 << 10,
+	
+// 	// red cpu usage
+// 	cpu_colour = 31
+// };
+
+/***********************************************************************************
+ * on_stream_request
+ *
+ * Audio stream data request handler.
+ ***********************************************************************************/
+// mm_word on_stream_request( mm_word length, mm_addr dest, mm_stream_formats format ) {
+// //----------------------------------------------------------------------------------
+	
+// 	s16 *target = dest;
+	
+// 	//------------------------------------------------------------
+// 	// synthensize a sine wave with an LFO applied to the pitch
+// 	// the stereo data is interleaved
+// 	//------------------------------------------------------------
+// 	int len = length;
+// 	for( ; len; len-- )
+// 	{
+// 		int sample = sinLerp(sine);
+		
+// 		// output sample for left
+// 		*target++ = sample;
+		
+// 		// output inverted sample for right
+// 		*target++ = -sample;
+		
+// 		sine += sine_freq + (sinLerp(lfo) >> lfo_shift);
+// 		lfo = (lfo + lfo_freq);
+// 	}
+	
+// 	return length;
+// }
+//fin son gameboy
 
 
 int main() {
@@ -2703,7 +3314,61 @@ int main() {
 
 	consoleDemoInit();
 
+	
+
 	mmInitDefaultMem((mm_addr)soundbank_bin);
+
+
+
+	//son gameboy
+	//----------------------------------------------------------------
+	// initialize maxmod without any soundbank (unusual setup)
+	//----------------------------------------------------------------
+	// mm_ds_system sys;
+	// sys.mod_count 			= 0;
+	// sys.samp_count			= 0;
+	// sys.mem_bank			= 0;
+	// sys.fifo_channel		= FIFO_MAXMOD;
+	// mmInit( &sys );
+	
+	//----------------------------------------------------------------
+	// open stream
+	//----------------------------------------------------------------
+	// mm_stream mystream;
+	// mystream.sampling_rate	= 25000;					// sampling rate = 25khz
+	// mystream.buffer_length	= 1200;						// buffer length = 1200 samples
+	// mystream.callback		= on_stream_request;		// set callback function
+	// mystream.format			= MM_STREAM_16BIT_STEREO;	// format = stereo 16-bit
+	// mystream.timer			= MM_TIMER0;				// use hardware timer 0
+	// mystream.manual			= true;		
+	
+	// 	mystream.sampling_rate	= 25000;					// sampling rate = 25khz
+	// 	mystream.buffer_length	= 1200;						// buffer length = 1200 samples
+
+	// 	mystream.callback		= on_stream_request;		// set callback function
+	// 	mystream.format			= MM_STREAM_16BIT_STEREO;	// format = stereo 16-bit
+	// 	mystream.timer			= MM_TIMER0;				// use hardware timer 0
+	// 	mystream.manual			= true;	
+	// 					// use manual filling
+	// mmStreamOpen( &mystream ); // c'est ça qui fait le SON!!!!!!
+	// mmStreamClose();
+	
+	//----------------------------------------------------------------
+	// when using 'automatic' filling, your callback will be triggered
+	// every time half of the wave buffer is processed.
+	//
+	// so: 
+	// 25000 (rate)
+	// ----- = ~21 Hz for a full pass, and ~42hz for half pass
+	// 1200  (length)
+	//----------------------------------------------------------------
+	// with 'manual' filling, you must call mmStreamUpdate
+	// periodically (and often enough to avoid buffer underruns)
+	//----------------------------------------------------------------
+	
+	SetYtrigger( 0 );
+	irqEnable( IRQ_VCOUNT );
+	//fin son gameboy
 	
 
 	//GLOBAL VARS
@@ -2714,11 +3379,44 @@ int main() {
 
 	draw_screen();
 
-	// printBottom('Sync : ', 0, 0);
-	// printBottom(syncDSMode, 6, 0);
+
 	consoleSelect(&topScreen); //faut remettre en top pour le reste
 
+	//joue son gameboy
+	// soundEnable();
+	// sound = soundPlayPSG(DutyCycle_12, 4000, 64, 64);	
+	// soundPause(sound);
+	//fin joue son gameboy
+
 	while (1) {
+
+		// swiWaitForVBlank();
+		// scanKeys();
+		// Pressed = keysDown();
+
+		// if(KEY_A & Pressed && sndStatus == 0)
+		// {
+		// 	soundSetPan(sound, 64);
+		// 	soundResume(sound);
+		// 	sndStatus = 1;
+		// 	iprintf("Sound On\n");
+		// }
+		// else if(KEY_A & Pressed && sndStatus == 1)
+		// {
+		// 	soundPause(sound);
+		// 	sndStatus = 0;
+		// 	iprintf("Sound OFF\n");
+		// }
+		// soundSetFreq(sound, 4000);
+		// soundSetWaveDuty(sound, 50);
+
+		//son gameboy nouvelle manière de faire
+		// wait until line 0
+		// swiIntrWait( 0, IRQ_VCOUNT);
+		
+		// update stream
+		// mmStreamUpdate();
+		//fin son gameboy
 
 		process_input();
 
