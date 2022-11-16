@@ -1,7 +1,6 @@
 #include <nds.h>
 #include <maxmod9.h>
 #include <stdio.h>
-//#include <tonc.h>
 #include <string.h>
 #include <stdlib.h>
 // pour le delay sur linux #include <unistd.h>
