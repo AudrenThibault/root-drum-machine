@@ -77,11 +77,11 @@ In super live mod, B+Up/Down will change all the samples of each lines.
 - Polyrhythm : (best feature in my opinion)
 It will cut the sequencer into 2 or 3 sequencers (2 at first and 3 if you press on 3 button which appeared). Move the cursor to be on the first, on the second or on the third and press B+Left (Left while keeping B pressed). It will make the sequencer where the red cross is, shorter than the second, so you can create polyrhythms. Try something simple at first like this :
 
-"o--- ---- o--- ----"  
-"---- ---- ---- ----"
+00  o--- ---- o--- ----  
+01  ---- ---- ---- ----
 
-"o--- ---- ----"  
-"---- ---- ----"
+07  o--- ---- ----  
+08  ---- ---- ----
 
 and you will hear the magic of polyrhythm :-)
 
