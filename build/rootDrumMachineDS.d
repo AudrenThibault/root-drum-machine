@@ -1,5 +1,5 @@
 rootDrumMachineDS.o: \
- /home/thibault/Documents/Perso/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_ds/source/rootDrumMachineDS.c \
+ /home/thibault/Documents/Perso/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/source/rootDrumMachineDS.c \
  /opt/devkitpro/libnds/include/nds.h \
  /opt/devkitpro/libnds/include/nds/libversion.h \
  /opt/devkitpro/libnds/include/nds/ndstypes.h \
@@ -62,13 +62,13 @@ rootDrumMachineDS.o: \
  /opt/devkitpro/libnds/include/nds/arm9/nand.h \
  /opt/devkitpro/libnds/include/maxmod9.h \
  /opt/devkitpro/libnds/include/mm_types.h \
- /home/thibault/Documents/Perso/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_ds/build/soundbank.h \
- /home/thibault/Documents/Perso/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_ds/build/soundbank_bin.h \
- /home/thibault/Documents/Perso/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_ds/include/r6502_portfont_bin.h \
- /home/thibault/Documents/Perso/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_ds/include/include.h \
- /home/thibault/Documents/Perso/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_ds/include/palette.h \
- /home/thibault/Documents/Perso/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_ds/include/help.h \
- /home/thibault/Documents/Perso/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_ds/include/anya.h
+ /home/thibault/Documents/Perso/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/build/soundbank.h \
+ /home/thibault/Documents/Perso/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/build/soundbank_bin.h \
+ /home/thibault/Documents/Perso/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/include/r6502_portfont_bin.h \
+ /home/thibault/Documents/Perso/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/include/include.h \
+ /home/thibault/Documents/Perso/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/include/palette.h \
+ /home/thibault/Documents/Perso/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/include/help.h \
+ /home/thibault/Documents/Perso/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/include/anya.h
 /opt/devkitpro/libnds/include/nds.h:
 /opt/devkitpro/libnds/include/nds/libversion.h:
 /opt/devkitpro/libnds/include/nds/ndstypes.h:
@@ -131,10 +131,10 @@ rootDrumMachineDS.o: \
 /opt/devkitpro/libnds/include/nds/arm9/nand.h:
 /opt/devkitpro/libnds/include/maxmod9.h:
 /opt/devkitpro/libnds/include/mm_types.h:
-/home/thibault/Documents/Perso/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_ds/build/soundbank.h:
-/home/thibault/Documents/Perso/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_ds/build/soundbank_bin.h:
-/home/thibault/Documents/Perso/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_ds/include/r6502_portfont_bin.h:
-/home/thibault/Documents/Perso/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_ds/include/include.h:
-/home/thibault/Documents/Perso/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_ds/include/palette.h:
-/home/thibault/Documents/Perso/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_ds/include/help.h:
-/home/thibault/Documents/Perso/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_ds/include/anya.h:
+/home/thibault/Documents/Perso/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/build/soundbank.h:
+/home/thibault/Documents/Perso/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/build/soundbank_bin.h:
+/home/thibault/Documents/Perso/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/include/r6502_portfont_bin.h:
+/home/thibault/Documents/Perso/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/include/include.h:
+/home/thibault/Documents/Perso/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/include/palette.h:
+/home/thibault/Documents/Perso/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/include/help.h:
+/home/thibault/Documents/Perso/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/include/anya.h:
