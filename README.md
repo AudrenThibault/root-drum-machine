@@ -77,13 +77,13 @@ In super live mod, B+Up/Down will change all the samples of each lines.
 - Polyrhythm : (best feature in my opinion)
 It will cut the sequencer into 2 or 3 sequencers (2 at first and 3 if you press on 3 button which appeared). Move the cursor to be on the first, on the second or on the third and press B+Left (Left while keeping B pressed). It will make the sequencer where the red cross is, shorter than the second, so you can create polyrhythms. Try something simple at first like this :
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;00&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  o--- ---- o--- ----  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;01&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  ---- ---- ---- ----
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;00&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  o--- ---- o--- ----  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;01&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  ---- ---- ---- ----
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;07&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  o--- ---- ----  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;08&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  ---- ---- ----
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;07&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  o--- ---- ----  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;08&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  ---- ---- ----
 
-and you will hear the magic of polyrhythm :-)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;and you will hear the magic of polyrhythm :-)
 
 ## Bottom screen (press on the green buttons with the stylet) page 2 :
 
