@@ -1,5 +1,5 @@
-MaxModExample.o: \
- /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum_polyrhythm/source/MaxModExample.c \
+rootDrumMachineDS.o: \
+ /home/thibault/Documents/Perso/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_ds/source/rootDrumMachineDS.c \
  /opt/devkitpro/libnds/include/nds.h \
  /opt/devkitpro/libnds/include/nds/libversion.h \
  /opt/devkitpro/libnds/include/nds/ndstypes.h \
@@ -62,12 +62,13 @@ MaxModExample.o: \
  /opt/devkitpro/libnds/include/nds/arm9/nand.h \
  /opt/devkitpro/libnds/include/maxmod9.h \
  /opt/devkitpro/libnds/include/mm_types.h \
- /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum_polyrhythm/build/soundbank.h \
- /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum_polyrhythm/build/soundbank_bin.h \
- /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum_polyrhythm/include/r6502_portfont_bin.h \
- /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum_polyrhythm/include/include.h \
- /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum_polyrhythm/include/palette.h \
- /home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum_polyrhythm/include/help.h
+ /home/thibault/Documents/Perso/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_ds/build/soundbank.h \
+ /home/thibault/Documents/Perso/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_ds/build/soundbank_bin.h \
+ /home/thibault/Documents/Perso/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_ds/include/r6502_portfont_bin.h \
+ /home/thibault/Documents/Perso/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_ds/include/include.h \
+ /home/thibault/Documents/Perso/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_ds/include/palette.h \
+ /home/thibault/Documents/Perso/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_ds/include/help.h \
+ /home/thibault/Documents/Perso/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_ds/include/anya.h
 /opt/devkitpro/libnds/include/nds.h:
 /opt/devkitpro/libnds/include/nds/libversion.h:
 /opt/devkitpro/libnds/include/nds/ndstypes.h:
@@ -130,9 +131,10 @@ MaxModExample.o: \
 /opt/devkitpro/libnds/include/nds/arm9/nand.h:
 /opt/devkitpro/libnds/include/maxmod9.h:
 /opt/devkitpro/libnds/include/mm_types.h:
-/home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum_polyrhythm/build/soundbank.h:
-/home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum_polyrhythm/build/soundbank_bin.h:
-/home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum_polyrhythm/include/r6502_portfont_bin.h:
-/home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum_polyrhythm/include/include.h:
-/home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum_polyrhythm/include/palette.h:
-/home/thibault/Documents/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/ds_drum_polyrhythm/include/help.h:
+/home/thibault/Documents/Perso/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_ds/build/soundbank.h:
+/home/thibault/Documents/Perso/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_ds/build/soundbank_bin.h:
+/home/thibault/Documents/Perso/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_ds/include/r6502_portfont_bin.h:
+/home/thibault/Documents/Perso/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_ds/include/include.h:
+/home/thibault/Documents/Perso/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_ds/include/palette.h:
+/home/thibault/Documents/Perso/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_ds/include/help.h:
+/home/thibault/Documents/Perso/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_ds/include/anya.h:
