@@ -2,6 +2,9 @@
 
 ![Alt text](root-drum-machine.jpg?raw=true "Root Drum Machine")
 
+Music exemple :
+[![IMAGE ALT TEXT](http://img.youtube.com/vi/fZjF7MMySLA/0.jpg)](https://youtu.be/fZjF7MMySLA "Root Drum Machine")
+
 # Build
 
 Create a file named maxmod_data with your .wav samples
@@ -13,7 +16,7 @@ Create a file named maxmod_data with your .wav samples
 
 This project is the next level of a project realised by Tolmdyn, available here : https://github.com/tolmdyn/gba-drum. A lot of thank's to him to let me used his sequencer for my project.
 
-it was at first for gameboy advance, but it's now for nintendo ds, using the aventage of screen buttons for more instant accessible options. 
+it was at first for gameboy advance, but it's now for nintendo ds, using the advantage of screen buttons for more instant accessible options. 
 
 # Manual :
 
