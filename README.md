@@ -2,7 +2,8 @@
 
 ![Alt text](root-drum-machine.jpg?raw=true "Root Drum Machine")
 
-Music exemple :
+Music video exammple :   
+
 [![IMAGE ALT TEXT](http://img.youtube.com/vi/fZjF7MMySLA/0.jpg)](https://youtu.be/fZjF7MMySLA "Root Drum Machine")
 
 # Build
