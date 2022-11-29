@@ -1,4 +1,6 @@
 make all --print-data-base --no-builtin-variables --no-builtin-rules --question
+make: *** No rule to make target 'all'.  Stop.
+
 # GNU Make 4.2.1
 # Built for x86_64-pc-linux-gnu
 # Copyright (C) 1988-2016 Free Software Foundation, Inc.
@@ -6,7 +8,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Wed Nov 16 12:26:13 2022
+# Make data base, printed on Tue Nov 29 14:52:46 2022
 
 # Variables
 
@@ -19,7 +21,7 @@ PREFIX := arm-none-eabi-
 # automatic
 ?F = $(notdir $?)
 # makefile (from '/opt/devkitpro/devkitARM/base_tools', line 5)
-UNAME_R := 5.15.0-52-generic
+UNAME_R := 5.15.0-53-generic
 # environment
 DESKTOP_SESSION = ubuntu
 # default
@@ -61,7 +63,7 @@ GAME_SUBTITLE2 := http://devkitpro.org
 # environment
 VSCODE_NLS_CONFIG = {"locale":"fr","availableLanguages":{},"_languagePackSupport":true}
 # environment
-JOURNAL_STREAM = 8:79445
+JOURNAL_STREAM = 8:82751
 # makefile (from 'Makefile', line 40)
 CFLAGS := -g -Wall -O2 -march=armv5te -mtune=arm946e-s -fomit-frame-pointer -ffast-math -mthumb -mthumb-interwork  -DARM9
 # environment
@@ -91,7 +93,7 @@ XDG_DATA_DIRS = /usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/d
 # makefile (from 'Makefile', line 110)
 LIBPATHS := -L/opt/devkitpro/libnds/lib
 # environment
-DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/1000/bus,guid=ae56520687634ffcdb6a50f663749f06
+DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/1000/bus,guid=26a1edfd862ddc2b41f5e8366385c6df
 # makefile (from '/opt/devkitpro/devkitARM/base_tools', line 23)
 AS := arm-none-eabi-as
 # makefile (from 'Makefile', line 75)
@@ -101,7 +103,7 @@ _ = /snap/code/113/usr/share/code/code
 # environment
 INFOPATH = /home/linuxbrew/.linuxbrew/share/info:
 # environment
-MANAGERPID = 3791
+MANAGERPID = 3473
 # makefile (from 'Makefile', line 27)
 MUSIC := maxmod_data
 # environment
@@ -121,7 +123,7 @@ HFILES :=  soundbank_bin.h
 # environment
 GPG_AGENT_INFO = /run/user/1000/gnupg/S.gpg-agent:0:1
 # environment
-SESSION_MANAGER = local/comput2:@/tmp/.ICE-unix/4024,unix/comput2:/tmp/.ICE-unix/4024
+SESSION_MANAGER = local/comput2:@/tmp/.ICE-unix/3703,unix/comput2:/tmp/.ICE-unix/3703
 # environment
 XDG_RUNTIME_DIR = /run/user/1000
 # environment
@@ -147,7 +149,7 @@ XDG_MENU_PREFIX = gnome-
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # environment
-INVOCATION_ID = af37bb3036004c5aae9b5243f1b34ca9
+INVOCATION_ID = d1c587b0e9654e929c6ac1af93dff8e2
 # makefile (from 'Makefile', line 44)
 LDFLAGS = -specs=ds_arm9.specs -g $(ARCH) -Wl,-Map,$(notdir $*.map)
 # environment
@@ -161,7 +163,7 @@ XDG_SESSION_DESKTOP = ubuntu
 # environment
 SSH_AUTH_SOCK = /run/user/1000/keyring/ssh
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 28266
+GIO_LAUNCHED_DESKTOP_FILE_PID = 42579
 # automatic
 %F = $(notdir $%)
 # makefile (from '/opt/devkitpro/devkitARM/base_tools', line 4)
@@ -183,7 +185,7 @@ symfony = /usr/bin/symfony
 # default
 .LOADED := 
 # environment
-SSH_AGENT_PID = 3986
+SSH_AGENT_PID = 3665
 # environment
 ORIGINAL_XDG_CURRENT_DESKTOP = ubuntu:GNOME
 # environment
@@ -255,6 +257,7 @@ CC := arm-none-eabi-gcc
 # environment
 GNOME_SHELL_SESSION_MODE = ubuntu
 # makefile (from 'Makefile', line 43)
+ 
 ASFLAGS := -g -mthumb -mthumb-interwork
 # default
 MAKE_VERSION := 4.2.1
@@ -267,9 +270,6 @@ GAME_TITLE :=
 # makefile
 .DEFAULT_GOAL := build
 # makefile (from 'Makefile', line 106)
- 
-make: *** No rule to make target 'all'.  Stop.
-
 INCLUDE := -iquote /home/thibault/Documents/Perso/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/include -I/opt/devkitpro/libnds/include -I/home/thibault/Documents/Perso/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/build
 # environment
 XDG_CURRENT_DESKTOP = Unity
@@ -366,9 +366,9 @@ GAME_SUBTITLE1 := built with devkitARM
 # environment
 LANG = C
 # environment
-VSCODE_PID = 28309
+VSCODE_PID = 42628
 # environment
-DBUS_STARTER_ADDRESS = unix:path=/run/user/1000/bus,guid=ae56520687634ffcdb6a50f663749f06
+DBUS_STARTER_ADDRESS = unix:path=/run/user/1000/bus,guid=26a1edfd862ddc2b41f5e8366385c6df
 # variable set hash-table stats:
 # Load=178/1024=17%, Rehash=0, Collisions=52/476=11%
 
@@ -379,11 +379,11 @@ DBUS_STARTER_ADDRESS = unix:path=/run/user/1000/bus,guid=ae56520687634ffcdb6a50f
 # Directories
 
 # source (device 66311, inode 31595834): 3 files, no impossibilities.
-# . (device 66311, inode 8920261): 13 files, no impossibilities.
+# . (device 66311, inode 8920261): 15 files, no impossibilities.
 # /home/thibault/Documents/Perso/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/source (device 66311, inode 31595834): 3 files, no impossibilities.
 # maxmod_data (device 66311, inode 31481277): 89 files, no impossibilities.
 
-# 108 files, no impossibilities in 4 directories.
+# 110 files, no impossibilities in 4 directories.
 
 # Implicit Rules
 
@@ -541,6 +541,7 @@ Makefile:
 build:
 #  Phony target (prerequisite of .PHONY).
 #  Implicit rule search has not been done.
+ 
 #  File does not exist.
 #  File has not been updated.
 #  recipe to execute (from 'Makefile', line 116):
@@ -553,7 +554,6 @@ build:
 #  Last modified 2020-07-28 04:27:14
 #  File has been updated.
 #  Successfully updated.
- 
 
 # Not a target:
 .DEFAULT:
@@ -586,12 +586,12 @@ clean:
 # General ('VPATH' variable) search path:
 # /home/thibault/Documents/Perso/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/source
 
-# strcache buffers: 1 (0) / strings = 139 / storage = 1738 B / avg = 12 B
-# current buf: size = 8162 B / used = 1738 B / count = 139 / avg = 12 B
+# strcache buffers: 1 (0) / strings = 141 / storage = 1788 B / avg = 12 B
+# current buf: size = 8162 B / used = 1788 B / count = 141 / avg = 12 B
 
-# strcache performance: lookups = 179 / hit rate = 22%
+# strcache performance: lookups = 181 / hit rate = 22%
 # hash-table stats:
-# Load=139/8192=2%, Rehash=0, Collisions=4/179=2%
-# Finished Make data base on Wed Nov 16 12:26:13 2022
+# Load=141/8192=2%, Rehash=0, Collisions=4/181=2%
+# Finished Make data base on Tue Nov 29 14:52:46 2022
 
  
