@@ -3,12 +3,13 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-// pour le delay sur linux #include <unistd.h>
+// à inclure pour le delay
+// for linux delay : #include <unistd.h>
 #include <unistd.h>
 #include <time.h>
 #include <dirent.h>
 #include <nds/ndstypes.h>
-//à inclure pour l'image
+//à inclure pour l'image - include this for image
 // #include <gl2d.h>
 #include "soundbank.h"
 #include "soundbank_bin.h"
@@ -24,6 +25,7 @@
 #define SCREEN_BUFFER  ((u16 *) 0x6000000)
 
 #define MAX_COLUMNS	16
+
 //nombre de colonnes - number of columns
 int less_columns = MAX_COLUMNS; //1st seq
 int less_columns_second_seq = MAX_COLUMNS; //2nd seq
