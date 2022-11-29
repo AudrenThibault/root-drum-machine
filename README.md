@@ -1,5 +1,7 @@
 # Root-drum-machine
 
+![Alt text](root-drum-machine.jpg?raw=true "Root Drum Machine")
+
 # Build
 
 Create a file named maxmod_data with your .wav samples
