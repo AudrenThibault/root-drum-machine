@@ -111,4 +111,4 @@ It's accorded with the option "Loop patterns" on the bottom screen. If it's on, 
 
 - IA Random : ability to define the times it randomize (1/2, 1/4, 1/5 etc...)
 
-- IA Limit (don't works for now) : defines the time (1/2, 1/4 etc...) on IA Random and/or IA crazy bpm will activate.
+- IA Limit : defines the time (1/2, 1/4 etc...) on IA Random and/or IA crazy bpm will activate.
