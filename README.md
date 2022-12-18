@@ -15,13 +15,14 @@ Create a file named maxmod_data with your .wav samples
 
 # About
 
-This project is the next level of a project realised by Tolmdyn, available here : https://github.com/tolmdyn/gba-drum. A lot of thank's to him to let me used his sequencer for my project.
+This project is a fork of a project realised by Tolmdyn, available here : https://github.com/tolmdyn/gba-drum. 
+Thanks to him for letting me use his sequencer for my project.
 
-it was at first for gameboy advance, but it's now for nintendo ds, using the advantage of screen buttons for more instant accessible options. 
+it was at first designed for gameboy advance, but it's now supported on Nintendo DS, using the advantage of "screen buttons" for more "quick access" options.
 
 # Manual :
 
-The better it works is with a real nintendo ds. On emulators, it works but the fluidity of the sequencer is not very accurate.
+It works better on the real hardware, it works also on emulators but the fluidity of the sequencer is not very accurate.
 
 ## Top screen
 
@@ -62,11 +63,13 @@ It's accorded with the option "Loop patterns" on the bottom screen. If it's on, 
 
 ## Bottom screen (press on the green buttons with the stylet) page 1 :
 
-Works only if sequencer is not playing to prevent display bugs
+Works only if the sequencer is not playing to prevent display bugs
 
 - Sync : works with Y cable. For exemple, one minijack to double mono female jacks to split the stereo signal in 2 mono signals. The left signal is the sync and the right signal is the normal sound (so plug it in mixer or headphones). Be carefull ! Sync signal can damage your monitors or your ears so test it at low level for see if you are listening the right signal. 
 
-It works with Korg machines like volcas, probably monotribe and others... you have to put the level of the nintendo ds at the maximum for it can works. On other machines than Korg, it can works, but ofter you have to increase the level of the sync for make it working. Like putting it in a mixer and increase the level before plug it back to your machine.
+It works with Korg machines like volcas, and probably on monotribe but you will have to put the level of the nintendo DS at the maximum in order to make it work.
+
+It can works on other machines too, like Akai Rhythm Wolf, but you will have to use a mixer or something like that to help increasing the output level before plugging it back into your machine. 
 
 Warning : Sync works with notes which are on track 11. If you want a normal sync you have to put notes in track 11 on the beggining of each columns like this o--- o--- o--- o---
 If Sync is on Off, track 11 is a normal sample track
