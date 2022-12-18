@@ -48,7 +48,7 @@ It's accorded with the option "Loop patterns" on the bottom screen. If it's on, 
 - 1/3 : sample is played 1/3 times
 - etc... until 1/f : sample is played 1/15 times
 
-#### A + left/right
+###### A + left/right
 
 - A+right : increase the pitch to one semitone
 - A+left : dicrease the pitch to one semitone 
