@@ -25,6 +25,7 @@ BUILD		:=	build
 SOURCES		:=	source
 INCLUDES	:=	include
 MUSIC       :=  maxmod_data
+# MODS        :=  mods
 #SYNC		:=  sync
 
 #---------------------------------------------------------------------------------
@@ -78,6 +79,8 @@ SFILES		:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.s)))
 BINFILES	:=	$(foreach dir,$(DATA),$(notdir $(wildcard $(dir)/*.*))) soundbank.bin
 
 export AUDIOFILES	:=	$(foreach dir,$(notdir $(wildcard $(MUSIC)/*.*)),$(CURDIR)/$(MUSIC)/$(dir))
+
+# export MODFILES	:=	$(foreach dir,$(notdir $(wildcard $(MODS)/*.*)),$(CURDIR)/$(MODS)/$(dir))
 
 						#$(foreach dir,$(notdir $(wildcard $(SYNC)/*.*)),$(CURDIR)/$(SYNC)/$(dir)) c'est un commentaire
 
@@ -141,9 +144,21 @@ $(OFILES_SOURCES) : $(HFILES)
 #---------------------------------------------------------------------------------
 # rule to build soundbank from music files
 #---------------------------------------------------------------------------------
+# WAVFILES := $(filter %.wav, $(wildcard *.wav))
+# MODFILES := $(filter %.mod, $(wildcard *.mod))
+
+
 soundbank.bin soundbank.h : $(AUDIOFILES)
 #---------------------------------------------------------------------------------
 	@mmutil $^ -d -osoundbank.bin -hsoundbank.h
+#@python3 $(CURDIR)/../add_ids.py soundbank.h
+
+
+# soundbank_mod.bin soundbank_mod.h : $(MODFILES)
+# #---------------------------------------------------------------------------------
+# 	@mmutil $^ -d -osoundbank_mod.bin -hsoundbank_mod.h
+
+
 
 #---------------------------------------------------------------------------------
 # This rule links in binary data with the .bin extension

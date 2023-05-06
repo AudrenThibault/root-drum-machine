@@ -1,6 +1,9 @@
 {
     "makefile.extensionOutputFolder": "./.vscode",
     "files.associations": {
-        "gl2d.h": "c"
+        "*.embeddedhtml": "html",
+        "gl2d.h": "c",
+        "time.h": "c",
+        "nds.h": "c"
     }
 }

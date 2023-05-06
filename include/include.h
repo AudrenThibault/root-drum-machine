@@ -23,7 +23,7 @@ int name_index;
 
 void samples_menu(int channel_index, int channel_item, int action);
 void settings_menu(int menu_option, int action);
-void process_input(void);
+void process_input(int button_disabled, time_t lastPress);
 
 
 void enable_serial_interrupt(void);
@@ -35,7 +35,7 @@ void setup_interrupts(void);
 void setup_timers(void);
 void update_timers(void);
 
-void play_sound(int row, int sample, int vol, int tune, int pan);
+void play_sound(int row, int sample, int vol, int tune, int pan, int modulePos);
 void play_column(void) __attribute__ ((section(".iwram")));
 void set_status(int new_status);
 int find_chain_start(int index);

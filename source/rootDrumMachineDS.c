@@ -9,6 +9,7 @@
 #include <time.h>
 #include <dirent.h>
 #include <nds/ndstypes.h>
+
 //à inclure pour l'image - include this for image
 // #include <gl2d.h>
 #include "soundbank.h"
@@ -18,6 +19,14 @@
 #include "palette.h"
 #include "help.h"
 
+// #define MOD_FLATOUTLIES	200
+// #define MOD_CAROTTE	201
+
+// #include <limits.h>
+// #include <errno.h>
+
+// #include "soundbank_mod.h"
+
 //image
 #include "anya.h"
 
@@ -25,6 +34,8 @@
 #define SCREEN_BUFFER  ((u16 *) 0x6000000)
 
 #define MAX_COLUMNS	16
+
+#define DEBOUNCE_DELAY 100 // en millisecondes
 
 //nombre de colonnes - number of columns
 int less_columns = MAX_COLUMNS; //1st seq
@@ -187,6 +198,7 @@ typedef struct {
 	u8 playOrNot;
 	u8 playOrNotCount;
 	u8 optionsUp;
+	u8 modulePositionner;
 } pattern_row; 
 
 typedef struct {
@@ -204,11 +216,13 @@ typedef struct pattern {
 #define HEADER_SIZE		150
 
 typedef struct channel {
+	u8 id;
 	u8 sample;
 	u8 volume;
 	u8 pitch;
 	u8 pan;
 	u8 status;
+	u8 modulePositionner;
 } channel;
  
 typedef struct song {
@@ -216,6 +230,7 @@ typedef struct song {
 	char tag[8];
 	char song_name[8];
 	float bpm;
+	float bpmTraditionalPoly;
 	u8 shuffle;
 	u8 loop_mode;
 	u8 sync_mode;
@@ -305,7 +320,11 @@ int page2 = false;
 int IAChangeSample = false;
 int IAChangePitch = false;
 int IARandomPitch = 0;
-int changedPage = false;
+
+int activePageOne = false;
+int activePageTwo = false;
+int activePageModPlayer = false;
+
 int IAChangeSampleNumber = 1;
 int IAChangePitchNumber = 1;
 int changeSampleDoneCounter = 0;
@@ -320,6 +339,19 @@ int arpegPitch1 = 1024+200;
 int arpegPitch2 = 1024+400;
 int arpegPitch3 = 1024+600;
 int arpegPitch4 = 1024+800;
+int autoStep = false;
+int autoStepStartNumber = 8;
+int modPlayer = false;
+int modPage = false;
+int mod = 1;
+int modBpm = 120;
+int volumeMod = 127;
+int pitchMod = 1520;
+int playMod = false;
+int superModFileLive = true;
+int modPosi = 0;
+int modJumpPosition = 0;
+int pressedKeySelect = false;
 
 PrintConsole topScreen;
 PrintConsole bottomScreen;
@@ -357,6 +389,16 @@ void update_timers(){
     REG_TM3C= TM_ENABLE | TM_CASCADE | TM_IRQ;
 }
 
+// void poly_commence_a_zero(){
+// 	//millis_between_ticks = (int) (((1.0f/(current_song->bpm/60.0f))/0.0001f)/4)/6;
+// 	//j'essaye avec /3 à la place de /4
+// 	millis_between_ticks = (int) (((1.0f/(current_song->bpm/60.0f))/0.0001f)/3)/6;
+
+// 	REG_TM3D= -millis_between_ticks;
+//     REG_TM3C=0;
+//     REG_TM3C= TM_ENABLE | TM_CASCADE | TM_IRQ;
+// }
+
 void serial_interrupt(void) __attribute__ ((section(".iwram")));
 void gpio_interrupt(void) __attribute__ ((section(".iwram")));	
 void timer3_interrupt(void) __attribute__ ((section(".iwram")));
@@ -393,6 +435,50 @@ void disable_trig_interrupt(){
 	irqDisable(IRQ_SPI);
 	irqEnable(IRQ_VBLANK | IRQ_TIMER3);
 }
+
+mm_word current_position = 0; // Variable pour stocker la position actuelle de lecture
+
+// Fonction pour définir la nouvelle position de lecture
+void set_module_position(mm_word position) {
+    mmPosition(position);
+    current_position = position; // Mettre à jour la position actuelle
+}
+
+void modPlay()
+{
+	if (mod == 1)
+	{
+		iprintf("\x1b[1;0HBBte...");
+		mmLoad(MOD_BIBITE);
+		// mmLoad("mod/FlatOutLies.mod");
+		mmStart(MOD_BIBITE, MM_PLAY_LOOP);
+	}
+	if (mod == 2)
+	{
+		iprintf("\x1b[1;0HBatuc...");
+		mmLoad(MOD_BATUC);
+		mmStart(MOD_BATUC, MM_PLAY_LOOP);
+	}
+	if (mod == 3)
+	{
+		iprintf("\x1b[1;0HRetrotro...");
+		mmLoad(MOD_RETROTRO);
+		mmStart(MOD_RETROTRO, MM_PLAY_LOOP);
+	}
+	// iprintf("\x1b[1;0HPlayingcarotte...");
+	mmSetModuleVolume(volumeMod);
+	mmSetModuleTempo(modBpm);
+	mmSetModulePitch(pitchMod);
+}
+
+// void unloadAllMods()
+// {
+//     mmUnload(MOD_BIBITE);
+//     mmUnload(MOD_BATUC);
+//     mmUnload(MOD_RETROTRO);
+//     // ... unload other mods if needed
+// }
+
 
 void init_song(){
 	//Song Variables	
@@ -571,7 +657,11 @@ int lfo_shift = 0;
 mm_word on_stream_request( mm_word length, mm_addr dest, mm_stream_formats format ) {}
 
 
-void play_sample(row, sample, vol, pitch, pan) {
+
+void play_sample(row, sample, vol, pitch, pan, modulePosition) {
+
+	// pattern_row *pv = &(current_song->patterns[current_pattern_index].columns[cursor_x].rows[cursor_y]);
+
 
 	if (globalPitch != 0 && superLiveMod == true) {
 		pitch = globalPitch;
@@ -580,7 +670,49 @@ void play_sample(row, sample, vol, pitch, pan) {
 		pitch = IARandomPitch;
 	}
 
-	if (sample != SFX_SYNC) {
+	int nmb = 0;
+	double fact = 2.3; // le facteur de la suite
+	// if (superModFileLive == true) {
+		if (sample != 0) {
+			nmb = sample * fact;
+		}
+		nmb = nmb + modJumpPosition;
+		set_module_position(nmb);
+	// }
+
+
+	// évite les crash à cause du trou dans les nombres
+	// dans soundbank.h à cause des MOD
+	int rando = rand() % 2;
+	if (sample < 100 && sample > 68) {
+		if (rando == 0) {
+			sample = 100;
+		} else {
+			sample = 68;
+		}
+	}
+	if (sample < 121 && sample > 103) {
+		if (rando == 0) {
+			sample = 121;
+		} else {
+			sample = 103;
+		}
+	}
+	if (sample < 155 && sample > 144) {
+		if (rando == 0) {
+			sample = 155;
+		} else {
+			sample = 144;
+		}
+	}
+
+	if (sample != SFX_SYNC 
+	// && sample != MOD_CAROTTE 
+	// && sample != MOD_RETROTRO
+	// && sample != MOD_FLATOUTLIES
+	// && (sample >= 0 && sample < MSL_NSAMPS)
+	// && sampleOk == 1
+	) {
 		mm_sound_effect sfx = {
 			{sample} ,			// id
 			(int)(1.0f * (pitch)),	// rate
@@ -605,7 +737,7 @@ void play_sample_sync(row, sample) {
 	active_sounds[row] = mmEffectEx(&sfx); //mmeffect returns mmhandler into the array
 }
 
-void play_sound(int row, int sample, int vol, int pitch, int pan){
+void play_sound(int row, int sample, int vol, int pitch, int pan, int modulePos){
 
 	if (active_sounds[row]){ 				//if theres a sound playing in that row
 		mmEffectCancel(active_sounds[row]); //cancel it before trigging it again
@@ -620,7 +752,7 @@ void play_sound(int row, int sample, int vol, int pitch, int pan){
 			if (syncDSMode == true) {
 				pan = 0; //j'écrase pan - pan is erased
 			}
-			play_sample(row, sample, vol, pitch, pan);
+			play_sample(row, sample, vol, pitch, pan, modulePos);
 		}
 	} else {
 		if (syncDSMode == true) {
@@ -628,7 +760,7 @@ void play_sound(int row, int sample, int vol, int pitch, int pan){
 				play_sample_sync(row, SFX_SYNC);
 			} 
 		} else {
-			play_sample(row, sample, vol, pitch, pan);
+			play_sample(row, sample, vol, pitch, pan, modulePos);
 		}
 	}
 }
@@ -647,15 +779,104 @@ void play_column(){
 
 	pattern_row *pvToUse;
 
-	if (current_song->bpm > 240) {
-		current_song->bpm = current_song->bpm / 2;
-		draw_bpm_pattern();
-		set_bpm_to_millis();
-		update_timers();
+	if (bpmFoliesActivated == true) {
+		if (current_song->bpm > 240) {
+			current_song->bpm = current_song->bpm / 2;
+			draw_bpm_pattern();
+			set_bpm_to_millis();
+			update_timers();
+		}
 	}
 
 	pas++;
 	pas = pas % less_columns;
+
+
+
+
+	// autoStep
+	if (autoStep == true) {
+		if (pas == 0 && step % 8 == 0) {
+			//less_columns--;
+			
+			// if (less_columns == 16) {
+			// 	less_columns = 15;
+			// }
+			// if (cursor_y >= 0 && cursor_y <= 5 ) {
+				if (less_columns > 1 && less_columns <= 16) {
+
+					int randStep = rand() % 2;
+					if (randStep == 0) {
+						if (less_columns >= 6) {
+							less_columns = less_columns - 2;
+							// for (int i=0; i<=5;i++) {
+								// if (less_columns == 11) {
+								// 	countColonsSeqOne = 1;
+								// }
+								// if (less_columns == 7) {
+								// 	countColonsSeqOne = 2;						
+								// }
+								// if (less_columns == 3) {
+								// 	countColonsSeqOne = 3;						
+								// }
+								//dessine un espace vide quand je fais B <-
+								//draw an empty space when press B+left
+								// iprintf("\x1b[%d;%dH ", i+3, (less_columns-countColonsSeqOne)+8);
+								// iprintf("\x1b[%d;%dH ", i+3, ((less_columns-countColonsSeqOne)+8)-1);
+								// iprintf("\x1b[%d;%dH ", i+3, 23); //car bug d'affichage
+
+							// }
+						}
+					} else {
+						if (less_columns <= 13) {
+							less_columns = less_columns + 2;
+						}
+						// for (int i=0; i<=5;i++) {
+						// 	if (less_columns == 11) {
+						// 		countColonsSeqOne = 1;
+						// 	} 
+						// 	if (less_columns == 12) {
+						// 		countColonsSeqOne = 1;						
+						// 	}
+						// 	if (less_columns == 13) {
+						// 		countColonsSeqOne = 0;						
+						// 	}
+						// 	if (less_columns == 9) {
+						// 		countColonsSeqOne = 1;						
+						// 	}
+						// 	if (less_columns == 5) {
+						// 		countColonsSeqOne = 2;						
+						// 	}
+						// 	iprintf("\x1b[%d;%dH-", i+3, less_columns+(7-countColonsSeqOne));
+						// 	iprintf("\x1b[%d;%dH-", i+3, (less_columns+(7-countColonsSeqOne))+1);	
+						// }
+					}
+				}
+			// } else {
+				// if (less_columns_second_seq > 0) {
+				// 	less_columns_second_seq--;
+				// 	for (int i=7; i<=11;i++) {
+				// 		if (less_columns_second_seq == 11) {
+				// 			countColonsSeqTwo = 1;
+				// 		}
+				// 		if (less_columns_second_seq == 7) {
+				// 			countColonsSeqTwo = 2;						
+				// 		}
+				// 		if (less_columns_second_seq == 3) {
+				// 			countColonsSeqTwo = 3;						
+				// 		}
+				// 		//dessine un espace vide quand je fais B <-
+				// 		//draw an empty space when press B+left
+				// 		iprintf("\x1b[%d;%dH ", i+3, (less_columns_second_seq-countColonsSeqTwo)+8);
+				// 	}
+				// }
+			// }
+		} 
+	}
+
+
+
+
 
 	if (IAChangeSample == true) {
 		if (IARandom == true) {
@@ -723,8 +944,14 @@ void play_column(){
 	}
 	sprintf(string_buff,"tours:%d ", (int) tours);
 	put_string(string_buff,22,18,0);
-	sprintf(string_buff,"step:%d ", (int) step);
+	sprintf(string_buff,"step:%d ", (int) step+1);
 	put_string(string_buff,22,19,0);
+	if (autoStep == true) {
+		printf(rouge);
+		sprintf(string_buff,"Auto step !");
+		put_string(string_buff,21,1,0);
+		printf(blanc);
+	}
 	if (IAAutoCymbal == true || IARandom == true || 
 		IAChangeSample == true || IAChangePitch == true) {
 		if (step < 4) {
@@ -759,11 +986,16 @@ void play_column(){
 		if (IAChangeSample == true) {
 			if (pas == 0 && step % IAChangeSampleNumber == 0) {
 				if (goBackSamples == false) {
-					if (changeSample < MAX_SAMPLES-1) {
+					if (changeSample < MAX_SAMPLES-10) {
 						changeSample++;
 						if (changeSample == SFX_SYNC) {
 							changeSample++;
 						}
+						// printf(cyan);
+						// for (int i = 0; i <= 11; i++) {
+						// 	iprintf("\x1b[%d;2H%02d",i+3, current_song->channels[i+3].sample+changeSample);
+						// }
+						// printf(blanc);	
 					} else {
 						goBackSamples = true;
 					}
@@ -773,6 +1005,11 @@ void play_column(){
 						if (changeSample == SFX_SYNC) {
 							changeSample--;
 						}
+						// printf(cyan);
+						// for (int i = 0; i <= 11; i++) {
+						// 	iprintf("\x1b[%d;2H%02d",i+3, current_song->channels[i+3].sample+changeSample);
+						// }
+						// printf(blanc);	
 					} else {
 						goBackSamples = false; //on repart à l'endroit - upside down
 					}
@@ -787,6 +1024,7 @@ void play_column(){
 		}	
 	}
 	for (row = 0; row < MAX_ROWS; row++){
+		modPosi = current_song->channels[0].modulePositionner;
 		if (polyRhythm == true) {
 			if (numberOfSeq == 2) {
 				if (row > 5) {
@@ -830,7 +1068,8 @@ void play_column(){
 					current_song->channels[row].sample+changeSample, 
 					current_song->channels[row].volume+55, 
 					pitch_table[pitch], 
-					pan);
+					pan,
+					current_song->channels[row].modulePositionner);
 				} 
 				if (pvToUse->playOrNotCount > pvToUse->playOrNot - 1) {
 					pvToUse->playOrNotCount = 0;
@@ -851,7 +1090,9 @@ void play_column(){
 			sampleRandom, 
 			current_song->channels[row].volume, 
 			pitch_table[12], //1024 = pitch normal
-			panRandom);
+			panRandom,
+			current_song->channels[row].modulePositionner 
+			);
 
 		// les autres modes que random (o et O) - others mods than random
 		} 
@@ -863,14 +1104,16 @@ void play_column(){
 			current_song->channels[row].sample+changeSample, 
 			current_song->channels[row].volume, 
 			pitch_table[pitch], 
-			pan);
+			pan,
+			current_song->channels[row].modulePositionner);
 		}
 		else if (pvToUse->volume == 2) { // O
 			play_sound(row, 
 			current_song->channels[row].sample+changeSample, 
 			current_song->channels[row].volume+55, 
 			pitch_table[pitch],
-			pan);
+			pan,
+			current_song->channels[row].modulePositionner);
 		}
 		pv++;
 		pvSecondSeq++;
@@ -886,7 +1129,8 @@ void play_column(){
 				arpegRowVolume, 
 				arpegPitch1, 
 				//pitch_table[pitch], 
-				0); //pan left
+				0, //pan left
+				modPosi); //module position
 		}
 		if (pas == 3 + arpegEcartement*arpegEcartement) {
 			mmEffectCancel(arpegSample); //cancel it before trigging it again
@@ -896,7 +1140,8 @@ void play_column(){
 				arpegRowVolume, 
 				arpegPitch2, 
 				//pitch_table[pitch], 
-				255); //pan right
+				255, //pan right
+				modPosi); //module position
 		}
 		if (pas == 4 + arpegEcartement*arpegEcartement) {
 			mmEffectCancel(arpegSample); //cancel it before trigging it again
@@ -906,7 +1151,8 @@ void play_column(){
 				arpegRowVolume, 
 				arpegPitch3, 
 				//pitch_table[pitch], 
-				0); //pan left
+				0, //pan left
+				modPosi); //module position
 		}
 		if (pas == 5 + arpegEcartement*arpegEcartement) {
 			mmEffectCancel(arpegSample); //cancel it before trigging it again
@@ -916,12 +1162,15 @@ void play_column(){
 				arpegRowVolume, 
 				arpegPitch4, 
 				//pitch_table[pitch], 
-				255); //pan right
+				255, //pan right
+				modPosi); //module position
 		}
 		if (arpegEcartement >= 16) {
 			arpegEcartement = 0;
 		}
 	}
+
+	
 }
 
 
@@ -1250,8 +1499,10 @@ void draw_column_cursor(){
 
 		draw_flag = 1;
 		xmod = 5+(current_column/4);
+		printf(vert);
 		dessiner_char(' ',last_column+last_xmod,2,0);
 		dessiner_char('v',current_column+xmod,2,0);
+		printf(blanc);
 		last_xmod = xmod;
 		last_column = current_column;
 		
@@ -1261,8 +1512,10 @@ void draw_column_cursor(){
 
 		if (polyRhythm == true && numberOfSeq == 2) {
 			xmodSecondSeq = 5+(current_secondSeq_column/4);
+			printf(cyan);
 			dessiner_char(' ',last_secondSeq_column+last_xmod_secondSeq,9,0);
 			dessiner_char('v',current_secondSeq_column+xmodSecondSeq,9,0);
+			printf(blanc);
 			last_xmod_secondSeq = xmodSecondSeq;
 			last_secondSeq_column = current_secondSeq_column;
 		}
@@ -1274,14 +1527,18 @@ void draw_column_cursor(){
 		if (polyRhythm == true && numberOfSeq == 3) {
 			//2eme seq
 			xmodSecondSeq = 5+(current_secondSeq_column/4);
+			printf(cyan);
 			dessiner_char(' ',last_secondSeq_column+last_xmod_secondSeq,6,0);
 			dessiner_char('v',current_secondSeq_column+xmodSecondSeq,6,0);
+			printf(blanc);
 			last_xmod_secondSeq = xmodSecondSeq;
 			last_secondSeq_column = current_secondSeq_column;
 			//3eme seq
 			xmodThirdSeq = 5+(current_thirdSeq_column/4);
+			printf(jaune);
 			dessiner_char(' ',last_thirdSeq_column+last_xmod_thirdSeq,10,0);
 			dessiner_char('v',current_thirdSeq_column+xmodThirdSeq,10,0);
+			printf(blanc);
 			last_xmod_thirdSeq = xmodThirdSeq;
 			last_thirdSeq_column = current_thirdSeq_column;
 		}
@@ -1522,9 +1779,9 @@ void custom_redessiner_seq(rowToStart, nb_rows, nb_columns) {
 			iprintf("\x1b[%d;3HR", r+3);		
 		}
 		printf(blanc);
-		printf(cyan); //cyan
-		iprintf("\x1b[0;13H%02d ", current_pattern_index);
-		printf(blanc); //blanc
+		// printf(cyan); //cyan
+		// iprintf("\x1b[0;13H%02d ", current_pattern_index);
+		// printf(blanc); //blanc
 	}	
 }
 
@@ -1546,8 +1803,8 @@ void draw_pattern(){
 		iprintf("\x1b[0;8HD."); 
 		printf(violet);
 		iprintf("\x1b[0;10HM.");
-		printf(cyan); //cyan
-		iprintf("\x1b[0;13H%02d ", current_pattern_index);
+		// printf(cyan); //cyan
+		// iprintf("\x1b[0;13H%02d ", current_pattern_index);
 		printf(blanc); //blanc	
 		draw_bpm_pattern();
 		custom_redessiner_seq(0, MAX_ROWS, less_columns);
@@ -2194,7 +2451,9 @@ void samples_menu(int channel_index, int channel_item, int action){
 		current_song->channels[channel_index].sample, 
 		current_song->channels[channel_index].volume, 
 		pitch_table[current_song->channels[channel_index].pitch],
-		current_song->channels[channel_index].pan );
+		current_song->channels[channel_index].pan,
+		current_song->channels[channel_index].modulePositionner
+		);
 	}
 		
 }
@@ -2352,7 +2611,11 @@ void settings_menu(int menu_option, int action){
 	}
 }
 
-void process_input(){
+
+
+
+void process_input(int button_disabled, time_t lastPress){
+	time_t now = time(NULL);
 	int keys_pressed, keys_held, keys_released, index;
 	scanKeys();
 	keys_pressed = keysDown();
@@ -2374,16 +2637,68 @@ void process_input(){
 		printf(rouge);
 		iprintf("\x1b[0;0H-Works if not playing-");
 		printf(blanc);
-		if (page2 == true) {
+		if (modPage == true) {
+			activePageOne = false;
+			activePageTwo = false;
+			// page2 = false;
 			consoleSelect(&bottomScreen);
-			if (changedPage == false) {
+			if (activePageModPlayer == false) {
 				for(int i = 1; i < 24; i++) {
 					iprintf("\x1b[%d;0H                                ", i);
 				}
-				changedPage = true;
+				activePageModPlayer = true;
+			}
+			printf(vert);
+			iprintf("\x1b[2;10H MOD Player" );
+			printf(cyan);
+			iprintf("\x1b[4;24H | exit|" );
+			printf(violet);
+			iprintf("\x1b[6;11H| Start |");
+			printf(blanc);
+			iprintf("\x1b[9;5HBPM :");
+			printf(vert);
+			iprintf("\x1b[9;11H| + | | - |");
+			printf(blanc);
+			iprintf("\x1b[9;24H%.2d", (int) modBpm / 10);
+			iprintf("\x1b[11;2HVolume :");
+			printf(vert);
+			iprintf("\x1b[11;11H| + | | - |");
+			printf(blanc);
+			iprintf("\x1b[11;24H%d", volumeMod);
+			iprintf("\x1b[13;3HPitch :");
+			printf(vert);
+			iprintf("\x1b[13;11H| + | | - |");
+			printf(blanc);
+			iprintf("\x1b[13;24H%d", pitchMod / 10);
+			iprintf("\x1b[15;4HSong :");
+			printf(vert);
+			iprintf("\x1b[15;11H| + | | - |");
+			printf(blanc);
+			iprintf("\x1b[15;24H%d", mod);
+			iprintf("\x1b[17;1HPattern :");
+			printf(vert);
+			iprintf("\x1b[17;11H| + | | - |");
+			printf(blanc);
+			iprintf("\x1b[17;24H%d", modJumpPosition);
+
+			// iprintf("\x1b[15;27H%d", page2);
+
+			//iprintf("\x1b[11;3HVol mod : | + | | - |  %d  ", volumeMod);
+			//iprintf("\x1b[13;1HPitch mod : | + | | - |  %d  ", pitchMod / 10);
+		}
+		else if (page2 == true) {
+			activePageModPlayer = false;
+			activePageOne = false;
+			consoleSelect(&bottomScreen);
+			if (activePageTwo == false) {
+				for(int i = 1; i < 24; i++) {
+					iprintf("\x1b[%d;0H                                ", i);
+				}
+				activePageTwo = true;
 			}
 			printf(cyan);
 			iprintf("\x1b[2;25H | <= |" );
+			iprintf("\x1b[4;24H | MOD |" );
 			printf(blanc);
 			if (IAChangeSample == true) {
 				iprintf("\x1b[2;0HIA sample change" );
@@ -2454,14 +2769,27 @@ void process_input(){
 					iprintf("\x1b[%d;0H                             ", 12+i);
 				}				
 			}
+			if (autoStep == true) {
+				iprintf("\x1b[22;5H Auto Step " );
+				printf(vert);
+				iprintf("\x1b[22;17H| On  |" );
+				printf(blanc);
+			} else {
+				iprintf("\x1b[22;5H Auto Step " );
+				printf(vert);
+				iprintf("\x1b[22;17H| Off |" );
+				printf(blanc);
+			}
 			printf(blanc);
-		} else {
+		} else { //page one
+			activePageModPlayer = false;
+			activePageTwo = false;
 			consoleSelect(&bottomScreen);
-			if (changedPage == false) {
+			if (activePageOne == false) {
 				for(int i = 1; i < 24; i++) {
 					iprintf("\x1b[%d;0H                                ", i);
 				}
-				changedPage = true;
+				activePageOne = true;
 			}
 			iprintf("\x1b[2;0HSync :         (track 11)" );
 			printf(cyan);
@@ -2499,7 +2827,7 @@ void process_input(){
 				printf(vert);
 				iprintf("\x1b[11;13H| On  |" );
 				printf(blanc);
-				iprintf("\x1b[13;0HR/L for global pitch  ");
+				iprintf("\x1b[13;3Hreset the pitch :  ");
 				printf(vert);
 				iprintf("\x1b[13;21H| Reset |");
 				printf(blanc);
@@ -2510,7 +2838,7 @@ void process_input(){
 				printf(vert);
 				iprintf("\x1b[11;13H| Off |" );
 				printf(blanc);
-				iprintf("\x1b[13;0HR/L = select pattern          ");
+				iprintf("\x1b[13;3Hreset the pitch :  ");
 				iprintf("\x1b[14;0HB+Up/Down = change one sample ");
 				iprintf("\x1b[15;0HSelect+R/L = menu           ");
 			}
@@ -2545,14 +2873,14 @@ void process_input(){
 				iprintf("\x1b[23;12H| Off |           " );
 			}
 			page2 = false;
-			changedPage = false;
+			modPage = false;
 		}
 		printf(blanc);
 		consoleSelect(&topScreen);
 		bottomPrinted = true;
 	}
 
-	if (page2 == false) { //page 1
+	if (page2 == false && modPage == false) { //page 1
 		if ((keys_held & KEY_TOUCH) && touch.px >= 61 && touch.px <= 109 && touch.py >= 15 && touch.py <= 25)
 		{
 			if (touchedBtn == false) {
@@ -2738,7 +3066,17 @@ void process_input(){
 				touchedBtn = true;
 			}
 		}	
-	} else if (page2 == true) { //page 2
+	} else if (page2 == true && activePageTwo == true) { //page 2
+
+		//Mod player page
+		if ((keys_held & KEY_TOUCH) && touch.px >= 205 && touch.px <= 253 && touch.py >= 31 && touch.py <= 41)
+		{
+			if (touchedBtn == false) {
+				modPage = !modPage;	
+				touchedBtn = true;
+			}
+		}	
+
 		//IA Change sample
 		if ((keys_held & KEY_TOUCH) && touch.px >= 141 && touch.px <= 189 && touch.py >= 15 && touch.py <= 25)
 		{
@@ -2747,6 +3085,16 @@ void process_input(){
 				touchedBtn = true;
 			}
 		}
+
+		//Mod player
+		if ((keys_held & KEY_TOUCH) && touch.px >= 205 && touch.px <= 253 && touch.py >= 31 && touch.py <= 41)
+		{
+			if (touchedBtn == false) {
+				modPlayer = !modPlayer;
+				touchedBtn = true;
+			}
+		}
+
 		//IA Change sample each number +
 		if ((keys_held & KEY_TOUCH) && touch.px >= 53 && touch.px <= 85 && touch.py >= 31 && touch.py <= 41)
 		{
@@ -2880,8 +3228,143 @@ void process_input(){
 				touchedBtn = true;
 			}
 		}
+		// Auto Step
+		if ((keys_held & KEY_TOUCH) && touch.px >= 141 && touch.px <= 189 && touch.py >= 175 && touch.py <= 186)
+		{
+			if (touchedBtn == false) {
+				autoStep = !autoStep;
+				touchedBtn = true;
+			}
+		}
+	} 
+	
+	// Mod player page
+	if (modPage == true) {
+
+		//Mod player page
+		if ((keys_held & KEY_TOUCH) && touch.px >= 205 && touch.px <= 253 && touch.py >= 31 && touch.py <= 41)
+		{
+			if (touchedBtn == false) {
+				modPage = !modPage;	
+				touchedBtn = true;
+			}
+		}
+
+		// start
+		if ((keys_held & KEY_TOUCH) && touch.px >= 93 && touch.px <= 157 && touch.py >= 47 && touch.py <= 59)
+		{
+			if (touchedBtn == false) {
+				if (playMod == true)
+				{
+					modPlay();
+				}
+				else
+				{
+					if (!playMod)
+					{
+						mmStop();
+						// unloadAllMods();
+					}
+				}
+				playMod = !playMod;
+				touchedBtn = true;
+			}
+		}
+
+		// Mod (Song song) change
+		if ((keys_held & KEY_TOUCH) && touch.px >= 94 && touch.px <= 125 && touch.py >= 118 && touch.py <= 128)
+		{
+			if (touchedBtn == false) {
+				mod++;
+				// mmStop();
+				// modPlay();
+				touchedBtn = true;
+			}
+		}
+		if ((keys_held & KEY_TOUCH) && touch.px >= 141 && touch.px <= 174 && touch.py >= 118 && touch.py <= 128)
+		{
+			if (touchedBtn == false) {
+				mod--;
+				// mmStop();
+				// modPlay();
+				touchedBtn = true;
+			}
+		}
+
+		// bpm
+		if ((keys_held & KEY_TOUCH) && touch.px >= 93 && touch.px <= 126 && touch.py >= 71 && touch.py <= 80)
+		{
+			if (touchedBtn == false) {
+				modBpm = modBpm + 90;
+				mmSetModuleTempo(modBpm);
+				// current_song->bpm = modBpm;
+				touchedBtn = true;
+			}
+		}
+		if ((keys_held & KEY_TOUCH) && touch.px >= 141 && touch.px <= 173 && touch.py >= 71 && touch.py <= 80)
+		{
+			if (touchedBtn == false) {
+				modBpm = modBpm - 90;
+				mmSetModuleTempo(modBpm);
+				// current_song->bpm = modBpm;
+				touchedBtn = true;
+			}
+		}
+
+		// volume
+		if ((keys_held & KEY_TOUCH) && touch.px >= 93 && touch.px <= 126 && touch.py >= 88 && touch.py <= 96)
+		{
+			if (touchedBtn == false) {
+				volumeMod = volumeMod + 10;
+				mmSetModuleVolume(volumeMod);
+				touchedBtn = true;
+			}
+		}
+		if ((keys_held & KEY_TOUCH) && touch.px >= 141 && touch.px <= 173 && touch.py >= 88 && touch.py <= 96)
+		{
+			if (touchedBtn == false) {
+				volumeMod = volumeMod - 10;
+				mmSetModuleVolume(volumeMod);
+				touchedBtn = true;
+			}
+		}
+
+		// pitch
+		if ((keys_held & KEY_TOUCH) && touch.px >= 93 && touch.px <= 126 && touch.py >= 103 && touch.py <= 112)
+		{
+			if (touchedBtn == false) {
+				pitchMod = pitchMod + 10;
+				mmSetModulePitch(pitchMod);
+				touchedBtn = true;
+			}
+		}
+		if ((keys_held & KEY_TOUCH) && touch.px >= 141 && touch.px <= 173 && touch.py >= 103 && touch.py <= 112)
+		{
+			if (touchedBtn == false) {
+				pitchMod = pitchMod - 10;
+				mmSetModulePitch(pitchMod);
+				touchedBtn = true;
+			}
+		}
+
+		// pattern step position modJumpPosition
+		if ((keys_held & KEY_TOUCH) && touch.px >= 93 && touch.px <= 126 && touch.py >= 136 && touch.py <= 145)
+		{
+			if (touchedBtn == false) {
+				modJumpPosition = modJumpPosition + 1;
+				touchedBtn = true;
+			}
+		}
+		if ((keys_held & KEY_TOUCH) && touch.px >= 141 && touch.px <= 173 && touch.py >= 136 && touch.py <= 145)
+		{
+			if (touchedBtn == false) {
+				modJumpPosition = modJumpPosition - 1;
+				touchedBtn = true;
+			}
+		}
 	}
-	//Page 2
+
+	// Page 2 button
 	if ((keys_held & KEY_TOUCH) && touch.px >= 213 && touch.px <= 253 && touch.py >= 16 && touch.py <= 26)
 	{
 		if (touchedBtn == false) {
@@ -2896,6 +3379,8 @@ void process_input(){
 	if (keys_released & KEY_TOUCH) {
 		touchedBtn = false;
 	}
+
+	
 
 	//PATTERN SCREEN INPUTS input pattern
 	if (current_screen == SCREEN_PATTERN){	
@@ -2942,6 +3427,7 @@ void process_input(){
 					int mod_pitch = (pv->pitch-1) + current_song->channels[cursor_y].pitch;
 					if (mod_pitch>0){
 						pv->pitch--;
+						pv->modulePositionner--;
 					} 
 					draw_cell_status();					
 				} 
@@ -3065,7 +3551,22 @@ void process_input(){
 
 					}	
 				}
-			} else {
+			}
+			// change global pitch
+			else if (keys_held & KEY_R ) {
+				if (globalPitch > 0) {
+					superLiveMod = true;
+					globalPitch-= 20;
+				}
+				draw_bpm_pattern();
+			}
+			//change .mod files pitch
+			else if (keys_held & KEY_L ) {
+				pitchMod = pitchMod - 10;
+				mmSetModulePitch(pitchMod);
+			}
+			
+			else {
 				if (cursor_x == 0) {
 					cursorPan = true;
 					printf(rouge);
@@ -3143,6 +3644,7 @@ void process_input(){
 					int mod_pitch = (pv->pitch+1) + current_song->channels[cursor_y].pitch;
 					if (mod_pitch < 24){
 						pv->pitch++;
+						pv->modulePositionner++;
 					}
 					draw_cell_status();
 				}
@@ -3294,7 +3796,22 @@ void process_input(){
 
 					}	
 				}
-			} else {
+			} 
+			// change global pitch
+			else if (keys_held & KEY_R ) {
+				if (globalPitch < 4000) {
+					superLiveMod = true;
+					globalPitch+= 20;
+				}
+				draw_bpm_pattern();
+			}
+			// change .mod files pitch
+			else if (keys_held & KEY_L ) {
+				pitchMod = pitchMod + 10;
+				mmSetModulePitch(pitchMod);
+			}
+			
+			else {
 				//mettre cursor tout à gauche pour panoramique
 				//cursor to far left for pan			
 				if (cursor_x == 15) {
@@ -3345,16 +3862,21 @@ void process_input(){
 			draw_cell_status();
 		}
 
-		//uniquement pour la DS
-		//only for nintendo DS
+		
 		if ( keys_pressed & KEY_X ) {
 			current_song->bpm = current_song->bpm + 10;
+			current_song->bpmTraditionalPoly = current_song->bpm/3;
+			// modBpm = modBpm + 150;
+			// mmSetModuleTempo(modBpm);
 			draw_bpm_pattern();
 			set_bpm_to_millis();
 			update_timers();
 		}
 		if ( keys_pressed & KEY_Y ) {
 			current_song->bpm = current_song->bpm - 10;
+			current_song->bpmTraditionalPoly = current_song->bpm/3;
+			// modBpm = modBpm - 150;
+			// mmSetModuleTempo(modBpm);
 			draw_bpm_pattern();
 			set_bpm_to_millis();
 			update_timers();
@@ -3408,6 +3930,19 @@ void process_input(){
 					printf(blanc);			
 				}
 			} 
+			else if (keys_held & KEY_R ) {
+				change_bpm(2, button_disabled, lastPress, DEBOUNCE_DELAY);
+			}
+			else if (keys_held & KEY_L) {
+				modJumpPosition = modJumpPosition + 3;
+				iprintf("\x1b[1;10HJump : %d", modJumpPosition);
+				set_module_position(modJumpPosition); 
+			}
+			else if (keys_held & KEY_SELECT) {
+				modBpm = modBpm + 90;
+				mmSetModuleTempo(modBpm);
+			}
+
 			else {
 				if (cursor_x == 16) {
 					cursor_x = 0;
@@ -3529,6 +4064,19 @@ void process_input(){
 					draw_cell_status();
 				}
 			} 
+			else if (keys_held & KEY_R) {
+				change_bpm(0, button_disabled, lastPress, DEBOUNCE_DELAY);	
+			}
+			else if (keys_held & KEY_L) {
+				modJumpPosition = modJumpPosition - 3;
+				iprintf("\x1b[1;10HJump : %d", modJumpPosition);
+				set_module_position(modJumpPosition); 
+			}
+			else if (keys_held & KEY_SELECT) {
+				modBpm = modBpm - 90;
+				mmSetModuleTempo(modBpm);
+			}
+
 			else {
 				//pan = cursor+1
 				//precedant one is normal
@@ -3599,22 +4147,32 @@ void process_input(){
 			// if draw_pattern() then r disappears.
 		}
 		
-		if ( (keys_pressed & KEY_START || keys_pressed & KEY_SELECT)) {		
-			if (play == PLAY_STOPPED){ 
-				play_pattern();
-				pas = 0;
-				tours = 0;
-				step = 0;
-				iaChangeRandom = false;
-				iaPreviousPatern = false;
-			}
-			else {
-				stop_song();
-				changedPatternOne = 0;
-				step = 0;
-				tours = 0;
-			}
+		if (keys_pressed & KEY_START) { // pour emulateur
+		// if ((keys_pressed & KEY_START) && !button_disabled) { // pour console ds
+			// time_t now = time(NULL);
+			// if ((now - lastPress) > (DEBOUNCE_DELAY / 1000)) { //// les mods ne jouent plus si on remet cette verif
+				// lastPress = now;
+				button_disabled = 1;
+				
+				// action à effectuer lorsque le bouton est pressé
+				if (play == PLAY_STOPPED){ 
+					play_pattern();
+					pas = 0;
+					tours = 0;
+					step = 0;
+					iaChangeRandom = false;
+					iaPreviousPatern = false;
+					button_disabled = 0; // réinitialisation de la variable
+				} else {
+					stop_song();
+					changedPatternOne = 0;
+					step = 0;
+					tours = 0;
+					button_disabled = 0; // réinitialisation de la variable
+				}
+			// }
 		}
+
 					
 		//steel in screen PATTERN
 		//si y'a des sons dan le pattern je le loop avec
@@ -3658,48 +4216,9 @@ void process_input(){
 						printf(blanc);
 					}
 				}
-			} else {
-				if ( keys_pressed & KEY_R ) {
-					if (keys_held & KEY_SELECT ) {
-						current_screen = SCREEN_SETTINGS; 
-						draw_screen();					
-					}
-					else {
-						if (current_pattern_index < (MAX_PATTERNS-1)) {
-							current_pattern_index+=1;
-						}
-						if (polyRhythm == false) {
-							custom_redessiner_seq(0, MAX_ROWS, less_columns);
-						} else {
-							custom_redessiner_all_seq_polyrhythm(0, MAX_ROWS, less_columns);
-						}
-					}			
-				}
-				if ( keys_pressed & KEY_L ) {
-					if (current_pattern_index > 0) {
-						current_pattern_index-=1;				
-					}
-					if (polyRhythm == false) {
-						custom_redessiner_seq(0, MAX_ROWS, less_columns);
-					} else {
-						custom_redessiner_all_seq_polyrhythm(0, MAX_ROWS, less_columns);
-					}
-				}
-			}
-		} else {
-			if ( keys_pressed & KEY_R ) {
-				if (globalPitch < 4000) {
-					globalPitch+= 20;
-				}
-				draw_bpm_pattern();
-			}
-			if ( keys_pressed & KEY_L ) {
-				if (globalPitch > 0) {
-					globalPitch-= 20;
-				}
-				draw_bpm_pattern();
-			}
-		}
+			} 
+		} 
+		
 
 		//B delete note
 		if ( (keys_pressed & KEY_B)) {
@@ -3761,46 +4280,6 @@ void process_input(){
 				draw_song();				
 			} else {
 			move_cursor(0,1);
-			}
-		}
-		
-		if ( keys_pressed & KEY_L ) {
-			if ( keys_held & KEY_SELECT ) {
-				current_screen = SCREEN_PATTERN;
-				draw_screen();
-			} else {
-				order_page=0;
-				draw_song();
-			}
-		}
-		
-		if ( keys_pressed & KEY_R ) {
-			if ( keys_held & KEY_SELECT ) {
-				current_screen = SCREEN_SAMPLES;
-				draw_screen();
-			} else {
-				order_page=50;
-				draw_song();
-			}
-		}
-				
-		if ( keys_pressed & KEY_START ) {
-			if (play == PLAY_STOPPED){ //start playing
-				play_song();
-			} else if (play == PLAY_LIVE){ //if livemode, queue next pattern
-				if ( keys_held & KEY_SELECT ) {
-					stop_song();
-				} else {
-					if (current_song->order[order_page+(cursor_x*10)+cursor_y] != NO_ORDER){
-						if (play_next != NO_ORDER){
-							clear_last_song_queued_cursor();
-						}
-						play_next = order_page+(cursor_x*10)+cursor_y;
-						draw_song_queued_cursor();
-					}
-				}
-			} else { //stop playing
-				stop_song();	
 			}
 		}
 	} 
@@ -4003,7 +4482,27 @@ void setup_display(){
 	define_palettes(current_song->color_mode);
 }
 
+void change_bpm(int factor, bool button_disabled, time_t lastPress, int debounce_delay){
+//   if (!button_disabled){
+    // time_t now = time(NULL);
+    // if ((now - lastPress) > (debounce_delay / 1000)) {
+    //   lastPress = now;
+      button_disabled = 1;
+	  if (factor == 2){
+		current_song->bpm = current_song->bpm * 2;
+	  } else if (factor == 0){
+		current_song->bpm = current_song->bpm / 2;
+	  }
+      draw_bpm_pattern();
+      set_bpm_to_millis();
+      update_timers();
+      button_disabled = 1;
+    // }
+//   }
+}
+
 int main() {
+
 	current_song = (song *) malloc(sizeof(song));
 	init_song();
 	setup_timers();
@@ -4032,11 +4531,16 @@ int main() {
 	current_screen = SCREEN_PATTERN;
 	current_ticks = 0;
 
+
 	draw_screen();
 
 	consoleSelect(&topScreen); //faut remettre en top pour le reste - it must be back on top then
 
+    time_t lastPress = 0;
+	static int button_disabled = 0;
+
 	while (1) {
-		process_input();
+        process_input(&button_disabled, &lastPress);
 	}
+
 }

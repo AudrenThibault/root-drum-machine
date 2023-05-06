@@ -13,6 +13,12 @@ Create a file named maxmod_data with your .wav samples
 - make clean
 - make
 
+# Warning
+
+Vérifier que les trous laissés par les MOD dans soundbank.h soient gérés. Chercher la ligne int rando = rand() % 2;
+Il se peut qu'il faille modifier les valeurs après un make clean et make ou après avoir ajouté d'autres samples.
+
+
 # About
 
 This project is a fork of a project realised by Tolmdyn, available here : https://github.com/tolmdyn/gba-drum. 
