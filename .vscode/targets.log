@@ -1,6 +1,4 @@
 make all --print-data-base --no-builtin-variables --no-builtin-rules --question
-make: *** No rule to make target 'all'.  Stop.
-
 # GNU Make 4.2.1
 # Built for x86_64-pc-linux-gnu
 # Copyright (C) 1988-2016 Free Software Foundation, Inc.
@@ -8,7 +6,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Sat May  6 11:15:13 2023
+# Make data base, printed on Sun Jul  2 12:44:59 2023
 
 # Variables
 
@@ -21,7 +19,7 @@ PREFIX := arm-none-eabi-
 # automatic
 ?F = $(notdir $?)
 # makefile (from '/opt/devkitpro/devkitARM/base_tools', line 5)
-UNAME_R := 5.15.0-71-generic
+UNAME_R := 5.15.0-76-generic
 # environment
 DESKTOP_SESSION = ubuntu
 # default
@@ -61,7 +59,7 @@ SHELL = /bin/sh
 # makefile (from '/opt/devkitpro/devkitARM/base_tools', line 27)
 NM := arm-none-eabi-gcc-nm
 # environment
-SNAP_DATA = /var/snap/code/127
+SNAP_DATA = /var/snap/code/132
 # makefile (from '/opt/devkitpro/devkitARM/ds_rules', line 20)
 GAME_SUBTITLE2 := http://devkitpro.org
 # environment
@@ -69,7 +67,7 @@ GIO_MODULE_DIR = /home/thibault/snap/code/common/.cache/gio-modules
 # environment
 VSCODE_NLS_CONFIG = {"locale":"en-us","osLocale":"fr-fr","availableLanguages":{},"_languagePackSupport":true}
 # environment
-JOURNAL_STREAM = 8:90117
+JOURNAL_STREAM = 8:82479
 # makefile (from 'Makefile', line 41)
 CFLAGS := -g -Wall -O2 -march=armv5te -mtune=arm946e-s -fomit-frame-pointer -ffast-math -mthumb -mthumb-interwork  -DARM9
 # environment
@@ -95,21 +93,21 @@ SOURCES := source
 # makefile (from 'Makefile', line 42)
 CXXFLAGS := -g -Wall -O2 -march=armv5te -mtune=arm946e-s -fomit-frame-pointer -ffast-math -mthumb -mthumb-interwork  -DARM9 -fno-rtti -fno-exceptions
 # environment
-XDG_DATA_DIRS = /home/thibault/snap/code/127/.local/share:/home/thibault/snap/code/127:/snap/code/127/usr/share:/usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop
+XDG_DATA_DIRS = /home/thibault/snap/code/132/.local/share:/home/thibault/snap/code/132:/snap/code/132/usr/share:/usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop
 # makefile (from 'Makefile', line 113)
 LIBPATHS := -L/opt/devkitpro/libnds/lib
 # environment
-DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/1000/bus,guid=55688c2e4c32bff4dcc2fb4f645616af
+DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/1000/bus,guid=4639276ec4d1cbeb362e2b3964a12cd6
 # makefile (from '/opt/devkitpro/devkitARM/base_tools', line 23)
 AS := arm-none-eabi-as
 # makefile (from 'Makefile', line 76)
 CFILES := rootDrumMachineDS.c
 # environment
-_ = /snap/code/127/usr/share/code/code
+_ = /snap/code/132/usr/share/code/code
 # environment
 INFOPATH = /home/linuxbrew/.linuxbrew/share/info:
 # environment
-MANAGERPID = 3924
+MANAGERPID = 3815
 # makefile (from 'Makefile', line 27)
 MUSIC := maxmod_data
 # environment
@@ -117,7 +115,7 @@ LESSOPEN = | /usr/bin/lesspipe %s
 # environment
 VSCODE_CWD = /home/thibault
 # environment
-GSETTINGS_SCHEMA_DIR = /home/thibault/snap/code/127/.local/share/glib-2.0/schemas
+GSETTINGS_SCHEMA_DIR = /home/thibault/snap/code/132/.local/share/glib-2.0/schemas
 # default
 MAKE_HOST := x86_64-pc-linux-gnu
 # makefile (from '/opt/devkitpro/devkitARM/base_tools', line 14)
@@ -129,15 +127,15 @@ HFILES :=  soundbank_bin.h
 # environment
 GPG_AGENT_INFO = /run/user/1000/gnupg/S.gpg-agent:0:1
 # environment
-SESSION_MANAGER = local/comput2:@/tmp/.ICE-unix/4150,unix/comput2:/tmp/.ICE-unix/4150
+SESSION_MANAGER = local/comput2:@/tmp/.ICE-unix/4043,unix/comput2:/tmp/.ICE-unix/4043
 # environment
 XDG_RUNTIME_DIR = /run/user/1000
 # environment
 GDK_PIXBUF_MODULE_FILE = /home/thibault/snap/code/common/.cache/gdk-pixbuf-loaders.cache
 # makefile (from 'Makefile', line 81)
-AUDIOFILES := /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-18.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-37.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_aMicrosonic_percus-27.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-44.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-02.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_aMicrosonic_percus-24.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-45.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_aMicrosonic_percus-31.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-10.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/new_REVRSP1_Sebastian_Mateo_Perc_02.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-04.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-47.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_aMicrosonic_percus-35.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-05.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_aMicrosonic_percus-05.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-01.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-41.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-48.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-33.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-26.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-35.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-22.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_aMicrosonic_percus-04.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-15.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_aMicrosonic_percus-37.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_aMicrosonic_percus-41.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-49.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_aMicrosonic_percus-08.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/new_REVRSP1_VARGENTA_Perc_01.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_aMicrosonic_percus-29.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-43.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/new_Perc2.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_aMicrosonic_percus-38.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_aMicrosonic_percus-06.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-14.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-12.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-38.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_aMicrosonic_percus-15.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-20.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_aMicrosonic_percus-07.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/new_REVRSP1_CALV_Perc_04.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-06.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-13.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_aMicrosonic_percus-39.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_aMicrosonic_percus-42.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/sync.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_aMicrosonic_percus-12.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_aaacuica1.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-19.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_aMicrosonic_percus-30.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_aMicrosonic_percus-16.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-32.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_aMicrosonic_percus-09.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-50.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-24.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_aMicrosonic_percus-14.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_aMicrosonic_percus-26.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-46.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_aMicrosonic_percus-18.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-31.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_aMicrosonic_percus-03.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_aMicrosonic_percus-01.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/new_REVRSP1_Sebastian_Mateo_Perc_03.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_aMicrosonic_percus-10.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-03.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-23.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_aMicrosonic_percus-40.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_aMicrosonic_percus-19.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-29.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/retrotro.mod /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-11.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-42.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_aMicrosonic_percus-36.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-08.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/bibite.mod /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-25.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-40.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-28.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/README.md /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_aMicrosonic_percus-25.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_aMicrosonic_percus-23.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_aMicrosonic_percus-32.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-17.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_aMicrosonic_percus-43.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-07.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-34.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_aMicrosonic_percus-02.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/new_Riddim_Sample_Vol3_Perc_08.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_aMicrosonic_percus-33.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-36.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_aaacuica3.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-39.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-21.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_aMicrosonic_percus-11.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_aMicrosonic_percus-13.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_aMicrosonic_percus-34.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-09.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_aaacuica2.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-30.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/new_REVRSP1_Kamix_Perc_03.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/batuc.mod /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_aMicrosonic_percus-17.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-27.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_aMicrosonic_percus-28.wav
+AUDIOFILES := /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-18.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-37.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_aMicrosonic_percus-27.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-44.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-02.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_aMicrosonic_percus-24.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-45.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_aMicrosonic_percus-31.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-10.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/new_REVRSP1_Sebastian_Mateo_Perc_02.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-04.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-47.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_aMicrosonic_percus-35.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/testgenesis.mod /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_aMicrosonic_percus-05.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-01.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-41.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-48.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-33.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-26.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-35.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-22.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_aMicrosonic_percus-04.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-15.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_aMicrosonic_percus-37.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_aMicrosonic_percus-41.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-49.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_aMicrosonic_percus-08.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/new_REVRSP1_VARGENTA_Perc_01.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_aMicrosonic_percus-29.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-43.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/new_Perc2.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_aMicrosonic_percus-38.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_aMicrosonic_percus-06.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-14.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-12.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-38.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_aMicrosonic_percus-15.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-20.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_aMicrosonic_percus-07.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/new_REVRSP1_CALV_Perc_04.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-06.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-13.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_aMicrosonic_percus-39.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_aMicrosonic_percus-42.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/sync.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_aMicrosonic_percus-12.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_aaacuica1.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-19.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_aMicrosonic_percus-30.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_aMicrosonic_percus-16.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-32.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/thatwasallyourfault.mod /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-50.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-24.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_aMicrosonic_percus-14.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_aMicrosonic_percus-26.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-46.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_aMicrosonic_percus-18.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-31.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_aMicrosonic_percus-03.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_aMicrosonic_percus-01.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/new_REVRSP1_Sebastian_Mateo_Perc_03.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_aMicrosonic_percus-10.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-03.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-23.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_aMicrosonic_percus-40.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_aMicrosonic_percus-09.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_aMicrosonic_percus-19.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-29.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/retrotro.mod /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-11.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-05.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-42.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_aMicrosonic_percus-36.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-08.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/bibite.mod /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-25.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-40.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-28.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/README.md /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_aMicrosonic_percus-25.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_aMicrosonic_percus-23.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_aMicrosonic_percus-32.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-17.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_aMicrosonic_percus-43.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-07.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-34.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_aMicrosonic_percus-02.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/new_Riddim_Sample_Vol3_Perc_08.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_aMicrosonic_percus-33.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-36.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_aaacuica3.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-39.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-21.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_aMicrosonic_percus-11.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_aMicrosonic_percus-13.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_aMicrosonic_percus-34.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-09.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_aaacuica2.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-30.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/new_REVRSP1_Kamix_Perc_03.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/batuc.mod /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_aMicrosonic_percus-17.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_Microsonic_percus-27.wav /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/maxmod_data/output_aMicrosonic_percus-28.wav
 # environment
-SNAP = /snap/code/127
+SNAP = /snap/code/132
 # makefile (from 'Makefile', line 101)
 OFILES_BIN := soundbank.bin.o
 # default
@@ -149,7 +147,7 @@ LIBDIRS := /opt/devkitpro/libnds
 # makefile (from 'Makefile', line 70)
 VPATH := /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/source  
 # environment
-SNAP_VERSION = 252e5463
+SNAP_VERSION = 695af097
 # makefile (from '/opt/devkitpro/devkitARM/base_tools', line 24)
 AR := arm-none-eabi-gcc-ar
 # environment
@@ -157,11 +155,11 @@ XDG_MENU_PREFIX = gnome-
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # environment
-INVOCATION_ID = d27c5c565ec94b9c834981975f9d87af
+INVOCATION_ID = 0f364460f7784245bccae2fe10db2442
 # makefile (from 'Makefile', line 45)
 LDFLAGS = -specs=ds_arm9.specs -g $(ARCH) -Wl,-Map,$(notdir $*.map)
 # environment
-GDK_PIXBUF_MODULEDIR = /snap/code/127/usr/lib/x86_64-linux-gnu/gdk-pixbuf-2.0/2.10.0/loaders
+GDK_PIXBUF_MODULEDIR = /snap/code/132/usr/lib/x86_64-linux-gnu/gdk-pixbuf-2.0/2.10.0/loaders
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
 # environment
@@ -171,7 +169,7 @@ XDG_SESSION_DESKTOP = ubuntu
 # environment
 SSH_AUTH_SOCK = /run/user/1000/keyring/ssh
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 8737
+GIO_LAUNCHED_DESKTOP_FILE_PID = 37552
 # automatic
 %F = $(notdir $%)
 # makefile (from '/opt/devkitpro/devkitARM/base_tools', line 4)
@@ -191,9 +189,9 @@ symfony = /usr/bin/symfony
 # default
 .LOADED := 
 # environment
-GTK_PATH = /snap/code/127/usr/lib/x86_64-linux-gnu/gtk-3.0
+GTK_PATH = /snap/code/132/usr/lib/x86_64-linux-gnu/gtk-3.0
 # environment
-SSH_AGENT_PID = 4112
+SSH_AGENT_PID = 4005
 # environment
 ORIGINAL_XDG_CURRENT_DESKTOP = ubuntu:GNOME
 # environment
@@ -213,7 +211,7 @@ VSCODE_CLI = 1
 # makefile (from '/opt/devkitpro/devkitARM/base_tools', line 30)
 ISVC = $(or $(VCBUILDHELPER_COMMAND),$(MSBUILDEXTENSIONSPATH32),$(MSBUILDEXTENSIONSPATH))
 # environment
-VSCODE_CODE_CACHE_PATH = /home/thibault/.config/Code/CachedData/252e5463d60e63238250799aef7375787f68b4ee
+VSCODE_CODE_CACHE_PATH = /home/thibault/.config/Code/CachedData/695af097c7bd098fbf017ce3ac85e09bbc5dda06
 # environment
 LOGNAME = thibault
 # environment
@@ -255,7 +253,7 @@ QT_IM_MODULE = ibus
 # environment
 DEVKITARM = /opt/devkitpro/devkitARM
 # environment
-SNAP_USER_DATA = /home/thibault/snap/code/127
+SNAP_USER_DATA = /home/thibault/snap/code/132
 # environment
 SHLVL = 0
 # environment
@@ -271,7 +269,7 @@ MAKE_VERSION := 4.2.1
 # environment
 USER = thibault
 # environment
-SNAP_REVISION = 127
+SNAP_REVISION = 132
 # makefile (from '/opt/devkitpro/devkitARM/ds_rules', line 12)
 GAME_TITLE := 
 # makefile
@@ -286,6 +284,9 @@ LIBVIRT_DEFAULT_URI = qemu:///system
 SFILES := 
 # automatic
 %D = $(patsubst %/,%,$(dir $%))
+ 
+make: *** No rule to make target 'all'.  Stop.
+
 # default
 MAKE_COMMAND := make
 # default
@@ -295,13 +296,12 @@ GAME_ICON := /opt/devkitpro/libnds/icon.bmp
 # automatic
 *F = $(notdir $*)
 # environment
-GTK_EXE_PREFIX = /snap/code/127/usr
+GTK_EXE_PREFIX = /snap/code/132/usr
 # environment
-VSCODE_IPC_HOOK = /run/user/1000/vscode-b29da0f6-1.78-main.sock
+VSCODE_IPC_HOOK = /run/user/1000/vscode-b29da0f6-1.79-main.sock
 # environment
 BAMF_DESKTOP_FILE_HINT = /var/lib/snapd/desktop/applications/code_code.desktop
 # makefile (from 'Makefile', line 34)
- 
 ARCH := -mthumb -mthumb-interwork
 # makefile
 MAKEFLAGS = pqrR
@@ -368,7 +368,7 @@ CHROME_DESKTOP = code-url-handler.desktop
 # environment
 WINDOWPATH = 2
 # environment
-LOCPATH = /snap/code/127/usr/lib/locale
+LOCPATH = /snap/code/132/usr/lib/locale
 # environment
 DEVKITPPC = /opt/devkitpro/devkitPPC
 # makefile (from 'Makefile', line 105)
@@ -380,11 +380,11 @@ GAME_SUBTITLE1 := built with devkitARM
 # environment
 LANG = C
 # environment
-VSCODE_PID = 8788
+VSCODE_PID = 37604
 # environment
-DBUS_STARTER_ADDRESS = unix:path=/run/user/1000/bus,guid=55688c2e4c32bff4dcc2fb4f645616af
+DBUS_STARTER_ADDRESS = unix:path=/run/user/1000/bus,guid=4639276ec4d1cbeb362e2b3964a12cd6
 # variable set hash-table stats:
-# Load=185/1024=18%, Rehash=0, Collisions=54/517=10%
+# Load=185/1024=18%, Rehash=0, Collisions=54/521=10%
 
 # Pattern-specific Variable Values
 
@@ -395,9 +395,9 @@ DBUS_STARTER_ADDRESS = unix:path=/run/user/1000/bus,guid=55688c2e4c32bff4dcc2fb4
 # source (device 66311, inode 31595834): 7 files, no impossibilities.
 # . (device 66311, inode 8920261): 21 files, no impossibilities.
 # /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/source (device 66311, inode 31595834): 7 files, no impossibilities.
-# maxmod_data (device 66311, inode 11050711): 107 files, no impossibilities.
+# maxmod_data (device 66311, inode 11050711): 109 files, no impossibilities.
 
-# 142 files, no impossibilities in 4 directories.
+# 144 files, no impossibilities in 4 directories.
 
 # Implicit Rules
 
@@ -581,12 +581,12 @@ clean:
 #  File has not been updated.
 #  recipe to execute (from 'Makefile', line 124):
 	@echo clean ...
- 
 	@rm -fr $(BUILD) $(TARGET).elf $(TARGET).nds 
 
 # Not a target:
 /opt/devkitpro/devkitARM/base_tools:
 #  Implicit rule search has been done.
+ 
 #  Last modified 2020-07-28 04:27:14
 #  File has been updated.
 #  Successfully updated.
@@ -600,12 +600,12 @@ clean:
 # General ('VPATH' variable) search path:
 # /home/thibault/Documents/important/TRAVAIL/sites/applisMusique/HOMEBREWS/ds/mazhoot/poly3/root_drum_machine_version_github_propre/root_drum_machine_ds/source
 
-# strcache buffers: 1 (0) / strings = 166 / storage = 4033 B / avg = 24 B
-# current buf: size = 8162 B / used = 4033 B / count = 166 / avg = 24 B
+# strcache buffers: 1 (0) / strings = 168 / storage = 4073 B / avg = 24 B
+# current buf: size = 8162 B / used = 4073 B / count = 168 / avg = 24 B
 
-# strcache performance: lookups = 209 / hit rate = 20%
+# strcache performance: lookups = 211 / hit rate = 20%
 # hash-table stats:
-# Load=166/8192=2%, Rehash=0, Collisions=4/209=2%
-# Finished Make data base on Sat May  6 11:15:13 2023
+# Load=168/8192=2%, Rehash=0, Collisions=4/211=2%
+# Finished Make data base on Sun Jul  2 12:44:59 2023
 
  

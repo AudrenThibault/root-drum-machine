@@ -14,9 +14,14 @@ Create a file named maxmod_data with your .wav samples
 - make
 
 # Warning
-
-Vérifier que les trous laissés par les MOD dans soundbank.h soient gérés. Chercher la ligne int rando = rand() % 2;
+Vérifier que les trous laissés par les MOD dans soundbank.h soient gérés. Chercher la ligne int eviterMod
 Il se peut qu'il faille modifier les valeurs après un make clean et make ou après avoir ajouté d'autres samples.
+!!! bien prendre le soundbank.h qui est dans build/soundbank.h !!!
+
+# Add mod :
+chercher la fonction : void modPlay()
+et ajouter le mod en fonction de son numéro dans
+build/soundbank.h il faut avoir fait aussi ce qui est dans le # Warning juste au dessus.
 
 
 # About
