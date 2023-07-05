@@ -6,6 +6,11 @@ Music video example :
 
 [![IMAGE ALT TEXT](http://img.youtube.com/vi/fZjF7MMySLA/0.jpg)](https://youtu.be/fZjF7MMySLA "Root Drum Machine")
 
+# Support :
+
+Help me keep creating stuff like this and making albums by buying my music here :
+https://mazhootmusic.bandcamp.com/album/dora-world
+
 # Build
 
 Create a file named maxmod_data with your .wav samples
