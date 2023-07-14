@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+
 // à inclure pour le delay
 // for linux delay : #include <unistd.h>
 #include <unistd.h>
@@ -385,6 +386,8 @@ int modPitchPadGlobalPitchNote13 = 12; //Y
 
 int modPitchPadCurrentNote = 0;
 int padPitchModLockKeys = false;
+
+int useSample = true;
 // int modPitchPadChangeNote = false;
 
 PrintConsole topScreen;
@@ -800,13 +803,7 @@ void play_sample(row, sample, vol, pitch, pan, modulePosition) {
 	sample = eviterMod(sample, 230, 241);
 
 
-	if (sample != SFX_SYNC 
-	// && sample != MOD_CAROTTE 
-	// && sample != MOD_RETROTRO
-	// && sample != MOD_FLATOUTLIES
-	// && (sample >= 0 && sample < MSL_NSAMPS)
-	// && sampleOk == 1
-	) {
+	if (sample != SFX_SYNC) {
 		mm_sound_effect sfx = {
 			{sample} ,			// id
 			(int)(1.0f * (pitch)),	// rate
@@ -817,6 +814,7 @@ void play_sample(row, sample, vol, pitch, pan, modulePosition) {
 		mmLoadEffect(sample);
 		active_sounds[row] = mmEffectEx(&sfx); //mmeffect returns mmhandler into the array
 	}
+	
 }
 
 void play_sample_sync(row, sample) {
@@ -830,6 +828,8 @@ void play_sample_sync(row, sample) {
 	};
 	active_sounds[row] = mmEffectEx(&sfx); //mmeffect returns mmhandler into the array
 }
+
+
 
 void play_sound(int row, int sample, int vol, int pitch, int pan, int modulePos){
 
@@ -3986,7 +3986,7 @@ void process_input(int button_disabled, time_t lastPress){
 					custom_redessiner_seq(0, MAX_ROWS, less_columns);
 				} else {
 					custom_redessiner_all_seq_polyrhythm(0, MAX_ROWS, less_columns);
-				}				
+				}			
 			} 
 		}
 
@@ -4471,12 +4471,12 @@ void process_input(int button_disabled, time_t lastPress){
 			} else {
 				current_song->bpm = current_song->bpm + 10;
 				current_song->bpmTraditionalPoly = current_song->bpm/3;
-				// modBpm = modBpm + 150;
-				// mmSetModuleTempo(modBpm);
 				draw_bpm_pattern();
 				set_bpm_to_millis();
 				update_timers();
 			}
+			// useSample = !useSample;
+			// switcherSonGameboyEtSample();
 		}
 		if ( keys_pressed & KEY_Y ) {
 			if (padPitchModLockKeys == true) {
@@ -4991,7 +4991,10 @@ int main() {
 
 	consoleDemoInit();
 
+	// pour que le son gameboy marche il faut commenter cette ligne
+	// mais si on la commente les samples ne marchent plus
 	mmInitDefaultMem((mm_addr)soundbank_bin);
+
 	
 	SetYtrigger( 0 );
 	irqEnable( IRQ_VCOUNT );	

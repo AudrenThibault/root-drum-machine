@@ -2093,7 +2093,7 @@ ARM.exidx
 .data           0x0000000002356250     0x1d08
                 0x0000000002356250                __data_start = ABSOLUTE (.)
  *(EXCLUDE_FILE(*.twl*) .data)
- .data          0x0000000002356250      0x174 rootDrumMachineDS.o
+ .data          0x0000000002356250      0x178 rootDrumMachineDS.o
                 0x0000000002356250                current_column
                 0x0000000002356254                less_columns
                 0x0000000002356258                vert
@@ -2142,52 +2142,52 @@ ARM.exidx
                 0x0000000002356398                modPitchPadGlobalPitchNote10
                 0x000000000235639c                modPitchPadGlobalPitchNote13
                 0x00000000023563a0                modPitchPadGlobalPitchNote9
-                0x00000000023563a4                modPitchPadGlobalPitchNote12
-                0x00000000023563a8                modPitchPadGlobalPitchNote11
-                0x00000000023563ac                superModFileLive
-                0x00000000023563b0                autoStepStartNumber
-                0x00000000023563b4                gris
-                0x00000000023563b8                IABpm
-                0x00000000023563bc                randomEnCours
-                0x00000000023563c0                ymod
- .data          0x00000000023563c4       0x28 /opt/devkitpro/libnds/lib/libnds9.a(mpu_setup.o)
+                0x00000000023563a4                useSample
+                0x00000000023563a8                modPitchPadGlobalPitchNote12
+                0x00000000023563ac                modPitchPadGlobalPitchNote11
+                0x00000000023563b0                superModFileLive
+                0x00000000023563b4                autoStepStartNumber
+                0x00000000023563b8                gris
+                0x00000000023563bc                IABpm
+                0x00000000023563c0                randomEnCours
+                0x00000000023563c4                ymod
+ .data          0x00000000023563c8       0x28 /opt/devkitpro/libnds/lib/libnds9.a(mpu_setup.o)
  *(EXCLUDE_FILE(*.twl*) .data.*)
  .data.currentConsole
-                0x00000000023563ec        0x4 /opt/devkitpro/libnds/lib/libnds9.a(console.o)
-                0x00000000023563ec                currentConsole
+                0x00000000023563f0        0x4 /opt/devkitpro/libnds/lib/libnds9.a(console.o)
+                0x00000000023563f0                currentConsole
  .data.defaultConsole
-                0x00000000023563f0       0x5c /opt/devkitpro/libnds/lib/libnds9.a(console.o)
-                0x00000000023563f0                defaultConsole
+                0x00000000023563f4       0x5c /opt/devkitpro/libnds/lib/libnds9.a(console.o)
+                0x00000000023563f4                defaultConsole
  .data.firstConsoleInit.0
-                0x000000000235644c        0x1 /opt/devkitpro/libnds/lib/libnds9.a(console.o)
- .data.count    0x000000000235644d        0x1 /opt/devkitpro/libnds/lib/libnds9.a(keys.o)
- .data.delay    0x000000000235644e        0x1 /opt/devkitpro/libnds/lib/libnds9.a(keys.o)
- .data.repeat   0x000000000235644f        0x1 /opt/devkitpro/libnds/lib/libnds9.a(keys.o)
+                0x0000000002356450        0x1 /opt/devkitpro/libnds/lib/libnds9.a(console.o)
+ .data.count    0x0000000002356451        0x1 /opt/devkitpro/libnds/lib/libnds9.a(keys.o)
+ .data.delay    0x0000000002356452        0x1 /opt/devkitpro/libnds/lib/libnds9.a(keys.o)
+ .data.repeat   0x0000000002356453        0x1 /opt/devkitpro/libnds/lib/libnds9.a(keys.o)
  .data.fifo_buffer_free
-                0x0000000002356450        0x4 /opt/devkitpro/libnds/lib/libnds9.a(fifosystem.o)
-                0x0000000002356450                fifo_buffer_free
- .data.fifo_freewords
                 0x0000000002356454        0x4 /opt/devkitpro/libnds/lib/libnds9.a(fifosystem.o)
-                0x0000000002356454                fifo_freewords
- .data.fifo_receive_queue
+                0x0000000002356454                fifo_buffer_free
+ .data.fifo_freewords
                 0x0000000002356458        0x4 /opt/devkitpro/libnds/lib/libnds9.a(fifosystem.o)
-                0x0000000002356458                fifo_receive_queue
- .data.fifo_send_queue
+                0x0000000002356458                fifo_freewords
+ .data.fifo_receive_queue
                 0x000000000235645c        0x4 /opt/devkitpro/libnds/lib/libnds9.a(fifosystem.o)
-                0x000000000235645c                fifo_send_queue
+                0x000000000235645c                fifo_receive_queue
+ .data.fifo_send_queue
+                0x0000000002356460        0x4 /opt/devkitpro/libnds/lib/libnds9.a(fifosystem.o)
+                0x0000000002356460                fifo_send_queue
  .data.bgControl
-                0x0000000002356460       0x20 /opt/devkitpro/libnds/lib/libnds9.a(background.o)
-                0x0000000002356460                bgControl
+                0x0000000002356464       0x20 /opt/devkitpro/libnds/lib/libnds9.a(background.o)
+                0x0000000002356464                bgControl
  .data.bgScrollTable
-                0x0000000002356480       0x20 /opt/devkitpro/libnds/lib/libnds9.a(background.o)
-                0x0000000002356480                bgScrollTable
+                0x0000000002356484       0x20 /opt/devkitpro/libnds/lib/libnds9.a(background.o)
+                0x0000000002356484                bgScrollTable
  .data.bgTransform
-                0x00000000023564a0       0x20 /opt/devkitpro/libnds/lib/libnds9.a(background.o)
-                0x00000000023564a0                bgTransform
+                0x00000000023564a4       0x20 /opt/devkitpro/libnds/lib/libnds9.a(background.o)
+                0x00000000023564a4                bgTransform
  .data._impure_ptr
-                0x00000000023564c0        0x4 /opt/devkitpro/devkitARM/bin/../lib/gcc/arm-none-eabi/12.1.0/../../../../arm-none-eabi/lib/thumb/libg.a(lib_a-impure.o)
-                0x00000000023564c0                _impure_ptr
- *fill*         0x00000000023564c4        0x4 ff
+                0x00000000023564c4        0x4 /opt/devkitpro/devkitARM/bin/../lib/gcc/arm-none-eabi/12.1.0/../../../../arm-none-eabi/lib/thumb/libg.a(lib_a-impure.o)
+                0x00000000023564c4                _impure_ptr
  .data.impure_data
                 0x00000000023564c8      0x460 /opt/devkitpro/devkitARM/bin/../lib/gcc/arm-none-eabi/12.1.0/../../../../arm-none-eabi/lib/thumb/libg.a(lib_a-impure.o)
  .data.__malloc_sbrk_base
@@ -2966,27 +2966,27 @@ ARM.exidx
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x0000000000000000    0x138a4
+.debug_info     0x0000000000000000    0x138b6
  *(.debug_info)
- .debug_info    0x0000000000000000     0xb1be rootDrumMachineDS.o
- .debug_info    0x000000000000b1be      0x329 /opt/devkitpro/libnds/lib/libnds9.a(touch.o)
- .debug_info    0x000000000000b4e7     0x26ac /opt/devkitpro/libnds/lib/libnds9.a(console.o)
- .debug_info    0x000000000000db93      0x43b /opt/devkitpro/libnds/lib/libnds9.a(keys.o)
- .debug_info    0x000000000000dfce     0x113e /opt/devkitpro/libnds/lib/libnds9.a(initSystem.o)
- .debug_info    0x000000000000f10c       0x5a /opt/devkitpro/libnds/lib/libnds9.a(securearea.o)
- .debug_info    0x000000000000f166      0x68d /opt/devkitpro/libnds/lib/libnds9.a(interrupts.o)
- .debug_info    0x000000000000f7f3      0x367 /opt/devkitpro/libnds/lib/libnds9.a(libnds_exit.arm.o)
- .debug_info    0x000000000000fb5a     0x183f /opt/devkitpro/libnds/lib/libnds9.a(fifosystem.o)
- .debug_info    0x0000000000011399       0x23 /opt/devkitpro/libnds/lib/libnds9.a(mpu_setup.o)
- .debug_info    0x00000000000113bc       0x23 /opt/devkitpro/libnds/lib/libnds9.a(IntrWait.o)
- .debug_info    0x00000000000113df       0x24 /opt/devkitpro/libnds/lib/libnds9.a(cpu_clock.o)
- .debug_info    0x0000000000011403       0x25 /opt/devkitpro/libnds/lib/libnds9.a(interruptDispatcher.o)
- .debug_info    0x0000000000011428       0x24 /opt/devkitpro/libnds/lib/libnds9.a(swiSoftReset.o)
- .debug_info    0x000000000001144c      0xa9c /opt/devkitpro/libnds/lib/libnds9.a(background.o)
- .debug_info    0x0000000000011ee8      0x793 /opt/devkitpro/libnds/lib/libnds9.a(trig.o)
- .debug_info    0x000000000001267b      0x790 /opt/devkitpro/libnds/lib/libnds9.a(video.o)
- .debug_info    0x0000000000012e0b      0xa76 /opt/devkitpro/libnds/lib/libnds9.a(system.o)
- .debug_info    0x0000000000013881       0x23 /opt/devkitpro/libnds/lib/libnds9.a(biosCalls.o)
+ .debug_info    0x0000000000000000     0xb1d0 rootDrumMachineDS.o
+ .debug_info    0x000000000000b1d0      0x329 /opt/devkitpro/libnds/lib/libnds9.a(touch.o)
+ .debug_info    0x000000000000b4f9     0x26ac /opt/devkitpro/libnds/lib/libnds9.a(console.o)
+ .debug_info    0x000000000000dba5      0x43b /opt/devkitpro/libnds/lib/libnds9.a(keys.o)
+ .debug_info    0x000000000000dfe0     0x113e /opt/devkitpro/libnds/lib/libnds9.a(initSystem.o)
+ .debug_info    0x000000000000f11e       0x5a /opt/devkitpro/libnds/lib/libnds9.a(securearea.o)
+ .debug_info    0x000000000000f178      0x68d /opt/devkitpro/libnds/lib/libnds9.a(interrupts.o)
+ .debug_info    0x000000000000f805      0x367 /opt/devkitpro/libnds/lib/libnds9.a(libnds_exit.arm.o)
+ .debug_info    0x000000000000fb6c     0x183f /opt/devkitpro/libnds/lib/libnds9.a(fifosystem.o)
+ .debug_info    0x00000000000113ab       0x23 /opt/devkitpro/libnds/lib/libnds9.a(mpu_setup.o)
+ .debug_info    0x00000000000113ce       0x23 /opt/devkitpro/libnds/lib/libnds9.a(IntrWait.o)
+ .debug_info    0x00000000000113f1       0x24 /opt/devkitpro/libnds/lib/libnds9.a(cpu_clock.o)
+ .debug_info    0x0000000000011415       0x25 /opt/devkitpro/libnds/lib/libnds9.a(interruptDispatcher.o)
+ .debug_info    0x000000000001143a       0x24 /opt/devkitpro/libnds/lib/libnds9.a(swiSoftReset.o)
+ .debug_info    0x000000000001145e      0xa9c /opt/devkitpro/libnds/lib/libnds9.a(background.o)
+ .debug_info    0x0000000000011efa      0x793 /opt/devkitpro/libnds/lib/libnds9.a(trig.o)
+ .debug_info    0x000000000001268d      0x790 /opt/devkitpro/libnds/lib/libnds9.a(video.o)
+ .debug_info    0x0000000000012e1d      0xa76 /opt/devkitpro/libnds/lib/libnds9.a(system.o)
+ .debug_info    0x0000000000013893       0x23 /opt/devkitpro/libnds/lib/libnds9.a(biosCalls.o)
 
 .debug_abbrev   0x0000000000000000     0x28e0
  *(.debug_abbrev)
@@ -3047,45 +3047,45 @@ ARM.exidx
  .debug_frame   0x00000000000010fc       0xbc /opt/devkitpro/libnds/lib/libnds9.a(video.o)
  .debug_frame   0x00000000000011b8       0xf8 /opt/devkitpro/libnds/lib/libnds9.a(system.o)
 
-.debug_str      0x0000000000000000     0x48d2
+.debug_str      0x0000000000000000     0x48dc
  *(.debug_str)
- .debug_str     0x0000000000000000     0x2170 rootDrumMachineDS.o
-                                       0x22ed (size before relaxing)
- .debug_str     0x0000000000002170      0x204 /opt/devkitpro/libnds/lib/libnds9.a(touch.o)
+ .debug_str     0x0000000000000000     0x217a rootDrumMachineDS.o
+                                       0x22f7 (size before relaxing)
+ .debug_str     0x000000000000217a      0x204 /opt/devkitpro/libnds/lib/libnds9.a(touch.o)
                                         0x332 (size before relaxing)
- .debug_str     0x0000000000002374      0x9bb /opt/devkitpro/libnds/lib/libnds9.a(console.o)
+ .debug_str     0x000000000000237e      0x9bb /opt/devkitpro/libnds/lib/libnds9.a(console.o)
                                        0x1282 (size before relaxing)
- .debug_str     0x0000000000002d2f       0xbc /opt/devkitpro/libnds/lib/libnds9.a(keys.o)
+ .debug_str     0x0000000000002d39       0xbc /opt/devkitpro/libnds/lib/libnds9.a(keys.o)
                                         0x420 (size before relaxing)
- .debug_str     0x0000000000002deb      0x340 /opt/devkitpro/libnds/lib/libnds9.a(initSystem.o)
+ .debug_str     0x0000000000002df5      0x340 /opt/devkitpro/libnds/lib/libnds9.a(initSystem.o)
                                         0xb81 (size before relaxing)
- .debug_str     0x000000000000312b       0x7f /opt/devkitpro/libnds/lib/libnds9.a(securearea.o)
+ .debug_str     0x0000000000003135       0x7f /opt/devkitpro/libnds/lib/libnds9.a(securearea.o)
                                         0x16e (size before relaxing)
- .debug_str     0x00000000000031aa      0x191 /opt/devkitpro/libnds/lib/libnds9.a(interrupts.o)
+ .debug_str     0x00000000000031b4      0x191 /opt/devkitpro/libnds/lib/libnds9.a(interrupts.o)
                                         0x496 (size before relaxing)
- .debug_str     0x000000000000333b      0x1cd /opt/devkitpro/libnds/lib/libnds9.a(libnds_exit.arm.o)
+ .debug_str     0x0000000000003345      0x1cd /opt/devkitpro/libnds/lib/libnds9.a(libnds_exit.arm.o)
                                         0x3e5 (size before relaxing)
- .debug_str     0x0000000000003508      0x468 /opt/devkitpro/libnds/lib/libnds9.a(fifosystem.o)
+ .debug_str     0x0000000000003512      0x468 /opt/devkitpro/libnds/lib/libnds9.a(fifosystem.o)
                                         0x8a9 (size before relaxing)
- .debug_str     0x0000000000003970       0x18 /opt/devkitpro/libnds/lib/libnds9.a(mpu_setup.o)
+ .debug_str     0x000000000000397a       0x18 /opt/devkitpro/libnds/lib/libnds9.a(mpu_setup.o)
                                          0x6c (size before relaxing)
- .debug_str     0x0000000000003988        0xb /opt/devkitpro/libnds/lib/libnds9.a(IntrWait.o)
+ .debug_str     0x0000000000003992        0xb /opt/devkitpro/libnds/lib/libnds9.a(IntrWait.o)
                                          0x6b (size before relaxing)
- .debug_str     0x0000000000003993        0xc /opt/devkitpro/libnds/lib/libnds9.a(cpu_clock.o)
+ .debug_str     0x000000000000399d        0xc /opt/devkitpro/libnds/lib/libnds9.a(cpu_clock.o)
                                          0x6c (size before relaxing)
- .debug_str     0x000000000000399f       0x16 /opt/devkitpro/libnds/lib/libnds9.a(interruptDispatcher.o)
+ .debug_str     0x00000000000039a9       0x16 /opt/devkitpro/libnds/lib/libnds9.a(interruptDispatcher.o)
                                          0x76 (size before relaxing)
- .debug_str     0x00000000000039b5        0xf /opt/devkitpro/libnds/lib/libnds9.a(swiSoftReset.o)
+ .debug_str     0x00000000000039bf        0xf /opt/devkitpro/libnds/lib/libnds9.a(swiSoftReset.o)
                                          0x6f (size before relaxing)
- .debug_str     0x00000000000039c4      0x2f2 /opt/devkitpro/libnds/lib/libnds9.a(background.o)
+ .debug_str     0x00000000000039ce      0x2f2 /opt/devkitpro/libnds/lib/libnds9.a(background.o)
                                         0x7a2 (size before relaxing)
- .debug_str     0x0000000000003cb6      0x110 /opt/devkitpro/libnds/lib/libnds9.a(trig.o)
+ .debug_str     0x0000000000003cc0      0x110 /opt/devkitpro/libnds/lib/libnds9.a(trig.o)
                                         0x2fc (size before relaxing)
- .debug_str     0x0000000000003dc6      0x7cb /opt/devkitpro/libnds/lib/libnds9.a(video.o)
+ .debug_str     0x0000000000003dd0      0x7cb /opt/devkitpro/libnds/lib/libnds9.a(video.o)
                                         0xc53 (size before relaxing)
- .debug_str     0x0000000000004591      0x335 /opt/devkitpro/libnds/lib/libnds9.a(system.o)
+ .debug_str     0x000000000000459b      0x335 /opt/devkitpro/libnds/lib/libnds9.a(system.o)
                                         0x798 (size before relaxing)
- .debug_str     0x00000000000048c6        0xc /opt/devkitpro/libnds/lib/libnds9.a(biosCalls.o)
+ .debug_str     0x00000000000048d0        0xc /opt/devkitpro/libnds/lib/libnds9.a(biosCalls.o)
                                          0x6c (size before relaxing)
 
 .debug_loc
