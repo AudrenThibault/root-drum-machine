@@ -13,7 +13,7 @@ https://mazhootmusic.bandcamp.com/album/dora-world
 
 # Build
 
-Create a file named maxmod_data with your .wav samples
+Create a folder named maxmod_data with your .wav samples
 
 - make clean
 - make
