@@ -11,6 +11,10 @@ Music video example :
 Help me keep creating stuff like this and making albums by buying my music here :
 https://mazhootmusic.bandcamp.com/album/dora-world
 
+# Use the .nds file
+
+With an emulator or on real nintendo ds (on emulator it's really bad, use the real console)
+
 # Build
 
 Create a folder named maxmod_data with your .wav samples, and type this in a terminal
