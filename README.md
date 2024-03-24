@@ -13,20 +13,23 @@ https://mazhootmusic.bandcamp.com/album/dora-world
 
 # Build
 
-Create a folder named maxmod_data with your .wav samples
+Create a folder named maxmod_data with your .wav samples, and type this in a terminal
 
 - make clean
 - make
 
-# Warning
-Vérifier que les trous laissés par les MOD dans soundbank.h soient gérés. Chercher la ligne int eviterMod
+# MOD files
+## Warning
+Vérifier que les trous laissés par les MOD dans soundbank.h soient gérés. Chercher la ligne struct Trou trous[] = 
 Il se peut qu'il faille modifier les valeurs après un make clean et make ou après avoir ajouté d'autres samples.
 !!! bien prendre le soundbank.h qui est dans build/soundbank.h !!!
-
-# Add mod :
+## Add a new mod file :
+Place mod files in maxmod_data (where the samples are also).
+If errors, it can be just that there is not enough place for the new mods.
 chercher la fonction : void modPlay()
 et ajouter le mod en fonction de son numéro dans
 build/soundbank.h il faut avoir fait aussi ce qui est dans le # Warning juste au dessus.
+SYNC mode : malheuresement il n'y a pas de fonction pour modifier le pan global d'un fichier mod dans maxmod donc a priori ce n'est pas possible. Il vaut mieux utiliser syncKontrol sur l'ipad et définir le bpm sur la volca. Ou en réglant directement le tempo sur la volca ça marche.
 
 
 # About
